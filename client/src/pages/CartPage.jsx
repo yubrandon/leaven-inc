@@ -13,16 +13,22 @@ const CartPage = () => {
                 {
                     cartItems.map((item) => {
                         return <CartCard
-                            key={item.id}
+                            key={item.data.id}
                             item={item}
                         ></CartCard>
                     })
                 }
-                <button className="btn btn-outline-success col-2 mt-5"
+                {cartItems.length ? 
+                (   <button className="btn btn-outline-success col-2 mt-5"
                         onClick={() => {
-                            
+                            //push order to db
+                            //redirect to success page
                         }}
-                >Complete Order</button>
+                    >Complete Order</button>
+                ) : (
+                    <h1>Your cart is empty!</h1>
+                )
+                }
             </div>
         </>
     );

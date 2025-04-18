@@ -1,6 +1,6 @@
 export default class Item {
-    constructor(title, qty) {
-        this.title = title;
+    constructor(item, qty) {
+        this.data = item;
         this.quantity = qty;
     }
 }
