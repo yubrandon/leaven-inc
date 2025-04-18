@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 const ItemCard = ({item, onClick}) => {
     //Item objects will have name, image, quantity(?)
     const [quantity, setQuantity] = useState(0);
