@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 
 const HomePage = () => {
     return (
         <>
             <NavigationBar />
-            <p>home page!</p>
+            <Link to="/store"><h1>Shop here!</h1></Link>
         </>
     );
 };

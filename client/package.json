@@ -8,9 +8,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sass": "npm --watch ./scss/custom.scss ./css/custom.css"
+    "sass": "sass --watch src/scss/custom.scss src/css/custom.css"
   },
   "dependencies": {
+    "bootstrap": "^5.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

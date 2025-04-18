@@ -5,11 +5,7 @@ import { ShopContext } from './ShopContext.jsx'
 
 
 const router = createBrowserRouter(routes);
-  /*    itemCount: 0,
-    cardItems: [],
-    addItem: () => {},
-    removeItem: () => {},
-    editItem: () => {}*/
+
 const App = () => {
   const [itemCount, setItemCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
