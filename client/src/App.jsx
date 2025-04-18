@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
-import { ShopContext } from './ShopContext.jsx'
-import Item from "./Item";
+import { ShopContext } from './utils/ShopContext.jsx'
+import Item from "./utils/Item";
 
 
 const router = createBrowserRouter(routes);
@@ -18,30 +18,31 @@ const App = () => {
   };
   //Adding an item to the cart
   const addItem = (item, qty) => {
-    console.log(qty);
     if(qty) {
       const found = hasItem(item.title);
       //If != -1, the index has been found
       if(found !== -1) {
         //Get the index of the item
-        const tempItem = cartItems[found];
+        const newItem = cartItems[found];
+        const originalQuantity = newItem.quantity;
         //Create array with the item removed
         const tempCart = cartItems.toSpliced(found,1);
         //Update quantity of the item
-        tempItem.quantity = tempItem.quantity += qty; 
+        newItem.quantity = newItem.quantity += qty; 
         //Create new array with updated item
-        const newCart = tempCart.toSpliced(found,0,tempItem);
+        const newCart = tempCart.toSpliced(found,0,newItem);
         //Set states for cart items and item count
         setCartItems(newCart);
-        setItemCount(itemCount + tempItem.quantity);
+        setItemCount(itemCount + newItem.quantity - originalQuantity);
 
       } else {
         const newItem = new Item(item.title,qty);
-        //Update state with new item
+        //Update states with new item
         setCartItems([...cartItems, newItem]);
+        setItemCount(itemCount + qty);
       }
     }
-    console.log(cartItems);
+    //console.log(cartItems);
   }
   //Deleting an item from the cart
   const removeItem = (item) => {

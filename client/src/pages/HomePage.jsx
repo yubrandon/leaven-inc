@@ -5,7 +5,9 @@ const HomePage = () => {
     return (
         <>
             <NavigationBar />
-            <Link to="/store"><h1>Shop here!</h1></Link>
+            <div className="container-fluid">
+                <Link to="/store"><h1>Shop here!</h1></Link>
+            </div>
         </>
     );
 };

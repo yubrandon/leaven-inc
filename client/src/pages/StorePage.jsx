@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ItemCard from "../components/ItemCard";
-import fetchItems from "./fetchItems";
-import { ShopContext } from "../ShopContext";
+import fetchItems from "../utils/fetchItems";
+import { ShopContext } from "../utils/ShopContext";
 
 const StorePage = () => {
     const [isLoading, setIsLoading] = useState(true);

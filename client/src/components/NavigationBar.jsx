@@ -1,4 +1,4 @@
-import { ShopContext } from "../ShopContext";
+import { ShopContext } from "../utils/ShopContext";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import shoppingCart from "../assets/shoppingCart.svg";
@@ -8,11 +8,14 @@ const NavigationBar = () => {
     return (
         <nav className="navbar px-4 bg-dark pb-2 mb-2">
             <div>
-                <Link to="/"  className="text-light link-underline link-underline-opacity-0"><h1>Leaven Inc</h1></Link>
+                <Link to="/"  className="text-light link-underline link-underline-opacity-0"><h1>LeavenInc</h1></Link>
             </div>
             <div className="d-flex align-items-center">
-                {/** profile component handle login under hover */}
-                <Link to="/store" className="link-underline link-underline-opacity-0 pe-3"><p className="text-light m-0">Store</p></Link>
+                <div className="d-flex align-items-center pe-2">
+                {/** profile component - handle login through conditional, link to /login or /profile based on session/authentication */}
+                    <Link to="/profile" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Profile</strong></p></Link>
+                    <Link to="/store" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Store</strong></p></Link>
+                </div>
                 <Link to="/cart">
                     <button type="button" className="btn btn-primary position-relative px-4">
                         <img className="" style={{height:'30px', filter:'invert(1)'}} src={shoppingCart} />
