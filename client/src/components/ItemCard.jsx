@@ -29,7 +29,10 @@ const ItemCard = ({item, onClick}) => {
                     </div>
                 </div>
                 <button className="btn btn-outline-success"
-                        onClick={onClick(quantity)}
+                        onClick={() => {
+                            onClick(item, quantity)
+                            setQuantity(0);
+                        }}
                 >Add to Cart</button>
             </div>
         </>

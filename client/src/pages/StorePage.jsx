@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ItemCard from "../components/ItemCard";
 import fetchItems from "./fetchItems";
+import { ShopContext } from "../ShopContext";
 
 const StorePage = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(false);
     const [data, setData] = useState(null);
+    const { addItem } = useContext(ShopContext);
 
     useEffect(() => {
         //link to real db when set up
         const getItems = async () => {
             const items = await fetchItems()
-                .catch((error) => setError(error));
+               .catch((error) => setError(error));
             setData(items);
             setIsLoading(false);
         }
@@ -34,8 +36,8 @@ const StorePage = () => {
                                             return <ItemCard 
                                                 key={item.id}
                                                 item={item}
-                                                onClick={(qty) => {
-                                                    
+                                                onClick={(item, qty) => {
+                                                    addItem(item,qty);
                                                 }}
                                             ></ItemCard>
                                         })
