@@ -52,6 +52,8 @@ const App = () => {
   const editItem = (item, qty, add) => {
     if(add) {
       
+    } else {
+      
     }
   }
   return (

@@ -17,7 +17,7 @@ const NavigationBar = () => {
                     <Link to="/store" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Store</strong></p></Link>
                 </div>
                 <Link to="/cart">
-                    <button type="button" className="btn btn-primary position-relative px-4">
+                    <button type="button" className="btn btn-primary position-relative px-3">
                         <img className="" style={{height:'30px', filter:'invert(1)'}} src={shoppingCart} />
                         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger ">
                             {itemCount ?
