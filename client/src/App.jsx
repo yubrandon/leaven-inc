@@ -13,7 +13,6 @@ const App = () => {
 
   //Adding an item to the cart
   const addItem = (item, qty) => {
-    //cacheItem(item);
     if(qty) {
       const index = hasItem(item, cartItems);
       //If != -1, the index has been found
@@ -49,11 +48,14 @@ const App = () => {
     setCartItems(newCart);
   }
   //Editing the quantity of an item from the cart
-  const editItem = (item, qty, add) => {
+  const editItem = (item, add) => {
     if(add) {
-      
+      addItem(item, 1);
     } else {
-      
+      const index = hasItem(item, cartItems);
+      if(cartItems[index].quantity) {
+        addItem(item,-1);
+      }
     }
   }
   return (

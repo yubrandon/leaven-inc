@@ -4,7 +4,7 @@ import { ShopContext } from "../utils/ShopContext";
 import CartCard from "../components/CartCard";
 
 const CartPage = () => {
-    const { cartItems } = useContext(ShopContext);
+    const { cartItems, removeItem } = useContext(ShopContext);
 
     return (
         <> 
@@ -12,10 +12,14 @@ const CartPage = () => {
             <div className="container-fluid d-flex flex-column align-items-center mt-5">
                 {
                     cartItems.map((item) => {
-                        return <CartCard
-                            key={item.data.id}
-                            item={item}
-                        ></CartCard>
+                        if(item.quantity === 0) {
+                            removeItem(item.data);
+                        } else {
+                            return <CartCard
+                                key={item.data.id}
+                                item={item}
+                            ></CartCard>
+                        }
                     })
                 }
                 {cartItems.length ? 

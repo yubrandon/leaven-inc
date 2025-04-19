@@ -6,7 +6,7 @@ import { ShopContext } from "../utils/ShopContext";
 
 const StorePage = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
     const [data, setData] = useState(null);
     const { addItem } = useContext(ShopContext);
 
@@ -25,9 +25,9 @@ const StorePage = () => {
             <NavigationBar />
             {isLoading ?
                 (
-                    <h1>Loading...</h1>
+                    <h1 className="text-center pt-3">Loading...</h1>
                 ) : (error ? 
-                        (<h1>Error!</h1>
+                        (   <h1 className="text-center pt-3">Error! {error}</h1>
                         ) : (
                             <div className="container-fluid py-2 px-3 d-flex flex-column align-items-center">
                                 <h1 className="mb-3">Check out the current items!</h1>
