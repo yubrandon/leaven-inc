@@ -37,27 +37,17 @@ CREATE TABLE IF NOT EXISTS orders (
 CREATE TABLE IF NOT EXISTS sales (
     order_id INTEGER NOT NULL,
     item_id INTEGER NOT NULL,
-    quantity NOT NULL,
+    quantity INTEGER NOT NULL,
     FOREIGN KEY (order_id) REFERENCES orders (id),
-    FOREIGN KEY (item_id) REFERENCES items (id),
-
+    FOREIGN KEY (item_id) REFERENCES items (id)
 );
-
-INSERT INTO users 
-
 `;
-/**
- * users - id (pk), display name, username, password
- * items - id (pk), name, description?
- * images - id(items fk), url
- * orders- id (pk), id(users fk)
- * sales - id(orders fk), id items(fk), quantity
- */
+
 
 async function main() {
     console.log('seeding');
     const client = new Client({
-        connectionString: process.env.url
+        connectionString: process.env.URL
     });
     await client.connect();
     await client.query(SQL);
