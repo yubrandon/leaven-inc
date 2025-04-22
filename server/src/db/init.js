@@ -6,7 +6,6 @@ require("dotenv").config();
 const SQL = `
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
-    display VARCHAR(255),
     username VARCHAR (255) NOT NULL,
     password VARCHAR (255) NOT NULL,
     PRIMARY KEY (id)

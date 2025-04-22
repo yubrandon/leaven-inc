@@ -47,16 +47,6 @@ const RegistrationPage = () => {
                         </label>
                     </div>
                     <div className="mb-3 row col-2">
-                        <label htmlFor="display" className="form-label">
-                            Display name
-                            <input  type="text" 
-                                    name="display" 
-                                    id="display" 
-                                    className="form-control"
-                            ></input>
-                        </label>
-                    </div>
-                    <div className="mb-3 row col-2">
                         <label htmlFor="password" className="form-label">
                             Password
                             <input type="password" name="password" className="form-control"></input>

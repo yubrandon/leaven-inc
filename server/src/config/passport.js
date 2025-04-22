@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
-const pool = require("../../db/pool.js");
+const pool = require("../db/pool.js");
 const LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
 
 const localStrategy = new LocalStrategy(
     async (username, password, done) => {
@@ -23,19 +24,19 @@ const localStrategy = new LocalStrategy(
 )
     
 
-module.exports = function(passport) {
-    passport.use(localStrategy);
-    passport.serializeUser((user, done) => {
-        console.log(user);
-        done(null, user.id);
-    });
-    passport.deserializeUser(async (id, done) => {
-        try {
-            const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-            const user = rows[0];
-            done(null, user);
-        } catch (err) {
-            done(err);
-        }
-    });
-}
+passport.use(localStrategy);
+
+passport.serializeUser((user, done) => {
+    console.log(user);
+    done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+    try {
+        const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+        const user = rows[0];
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
+});

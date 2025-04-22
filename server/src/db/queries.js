@@ -10,7 +10,7 @@ async function usernameGet(username) {
 }
 async function userPost(user) {
     const SQL = `
-        INSERT INTO users (display, username, password) VALUES ($1, $2, $3)
+        INSERT INTO users (username, password) VALUES ($1, $2)
     `;
     const res = await pool.query(SQL, Object.values(user));
     //return res;

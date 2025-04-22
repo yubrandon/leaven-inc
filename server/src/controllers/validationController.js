@@ -3,12 +3,9 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 
 //Form field validation
-const displayLengthErr = "Display name must be between 4 and 12 characters long.";
 const nameLengthErr = "Username must be between 4 and 12 characters long.";
 const passwordLengthErr = "Password must be between 8 and 20 characters long.";
 const validate = [
-    body("display").trim()
-        .isLength({min:4, max:12}).withMessage(displayLengthErr),
     body("username").trim()
         .isLength({min:4, max:12}).withMessage(nameLengthErr),
     body("password").trim()
