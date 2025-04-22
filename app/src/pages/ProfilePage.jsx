@@ -1,8 +1,10 @@
 import NavigationBar from "../components/NavigationBar";
+import { useNavigate } from "react-router-dom";
 /**
- * TO DO
- * after express server set up, block access if not authenticated
- * display orders in dropdown
+ * fetch /users
+ * if !ok | 401, navigate to login
+ * if ok, display user info.
+ * 
  */
 const ProfilePage = () => {
     const handleSubmit = async () => {
@@ -18,6 +20,8 @@ const ProfilePage = () => {
         const json = await response.json();
 
         console.log(json);
+        const cookieValue = document.cookie;
+        console.log("cookie:",cookieValue);
     }
     return (
         <>
