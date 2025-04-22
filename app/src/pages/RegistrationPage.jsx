@@ -21,7 +21,7 @@ const RegistrationPage = () => {
             );
             const json = await response.json();
             if(response.ok) {
-                navigate("/login");
+                navigate("login");
             } else {
                 const errors = [];
                 json.forEach((error) => {

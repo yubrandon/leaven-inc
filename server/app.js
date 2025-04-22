@@ -1,17 +1,30 @@
 const express = require("express");
 const session = require('express-session');
-const apiRouter = require("./routes/apiRouter");
 const cors = require('cors');
 require("dotenv").config();
 
-const passport= require("./passport");
+const passport = require("passport");
+require("./src/config/strategies/local.strategy")(passport);
+
+const apiRouter = require("./src/routes/apiRouter");
+
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use(session({secret: process.env.SECRET_KEY, resave: false, saveUninitialized: false}));
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials:true
+}));
+
+app.use(session({
+    secret: process.env.SECRET_KEY, 
+    resave: false, 
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
 app.use(passport.session());
+
 
 app.use("/api", apiRouter);
 //API fetch can append response.status to json object when fetching - json['status'] = response.status
@@ -25,3 +38,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
+
+module.exports = app;

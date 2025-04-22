@@ -1,11 +1,4 @@
 import { useNavigate, Link } from "react-router-dom";
-
-/**
- * TO DO
- * get credential inputs from user
- * authenticate and start session
- */
-
 import NavigationBar from "../components/NavigationBar";
 
 const LoginPage = () => {
@@ -13,6 +6,27 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        const user = Object.fromEntries(formData);
+        const url = `${import.meta.env.VITE_API_URL}/login`;
+        const login = async () => {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(user),
+            });
+            console.log(response);
+            const json = await response.json();
+            console.log(json);
+            if(response.ok) {
+                navigate("/profile");
+            } else {
+                //TODO: connect session on front end side
+            }
+        };
+        await login();
     }
     return (
         <>
