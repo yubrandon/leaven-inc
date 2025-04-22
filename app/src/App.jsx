@@ -5,7 +5,6 @@ import { ShopContext } from './utils/ShopContext.jsx'
 import Item from "./utils/Item";
 import { hasItem } from './utils/contextUtils.js';
 
-
 const router = createBrowserRouter(routes);
 const App = () => {
   const [itemCount, setItemCount] = useState(0);

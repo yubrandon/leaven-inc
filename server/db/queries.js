@@ -8,7 +8,8 @@ async function userPost(user) {
     const SQL = `
         INSERT INTO users (display, username, password) VALUES ($1, $2, $3)
     `;
-    await pool.query(SQL, [user.display, user.name, user.password]);
+    const res = await pool.query(SQL, Object.values(user));
+    //return res;
 }
 async function itemsGet() {
     const { rows } = await pool.query("SELECT * FROM items");

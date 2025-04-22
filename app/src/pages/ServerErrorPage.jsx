@@ -1,15 +1,15 @@
 import NavigationBar from "../components/NavigationBar";
 
-const ErrorPage = () => {
+const ServerErrorPage = () => {
     return (
         <>
             <NavigationBar />
             <div className="container-fluid d-flex flex-column align-items-center">
-                <h1>404</h1>
-                <h2>Page Not Found</h2>
+                <h1>500</h1>
+                <h2>Internal Server Error</h2>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default ErrorPage;
+export default ServerErrorPage;

@@ -13,7 +13,7 @@ const NavigationBar = () => {
             <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center pe-2">
                 {/** profile component - handle login through conditional, link to /login or /profile based on session/authentication */}
-                    <Link to="/profile" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Profile</strong></p></Link>
+                    <Link to="/register" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Profile</strong></p></Link>
                     <Link to="/store" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Store</strong></p></Link>
                 </div>
                 <Link to="/cart">
