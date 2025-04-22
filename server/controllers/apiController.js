@@ -1,16 +1,11 @@
 const db = require("../db/queries.js");
-const bcrypt = require("bcryptjs");
 
 async function getUser(req, res) {
-
-}
-
-async function createUserPost(req, res) {
-    const user  = req.body;
-    user.password = await bcrypt.hash(user.password, 10);
-    await db.userPost(user);
+    const { id } = req.query;
+    await db.userGet(id);
     res.status(200).send({message:"ok"});
 }
+
 
 async function getItems(req, res)  {
     const items = await db.itemsGet();
@@ -18,10 +13,10 @@ async function getItems(req, res)  {
     console.log(items);
 };
 
-async function postItems(req, res) {
+async function createItem(req, res) {
     
 }
-async function checkoutItems(req, res) {
+async function createCheckout(req, res) {
     
 }
 async function getOrders(req, res) {
@@ -30,4 +25,4 @@ async function getOrders(req, res) {
 
 
 
-module.exports = { getUser, createUserPost, getItems, postItems, checkoutItems, getOrders };
+module.exports = { getUser, getItems, createItem, createCheckout, getOrders };

@@ -1,7 +1,11 @@
 const pool = require("./pool");
 
-async function userGet() {
-    const { rows } = await pool.query();
+async function userGet(id) {
+    const { rows } = await pool.query("SELECT * FROM users WHERE id=$1", [id]);
+    return rows;
+}
+async function usernameGet(username) {
+    const { rows } = await pool.query("SELECT * FROM users WHERE username=$1", [username]);
     return rows;
 }
 async function userPost(user) {
@@ -53,6 +57,6 @@ async function salesPost(sale) {
     await pool.query(SQL);
 }
 
-module.exports = { userGet, userPost, itemsGet, itemsPost, imagesGet, imagesPost, 
+module.exports = { userGet, usernameGet, userPost, itemsGet, itemsPost, imagesGet, imagesPost, 
                     ordersGet, ordersPost, salesGet, salesPost
                 };

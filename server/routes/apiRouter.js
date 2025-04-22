@@ -1,13 +1,14 @@
 const { Router } = require("express");
 const apiController = require("../controllers/apiController");
+const validationController = require("../controllers/validationController");
 const apiRouter = Router();
 
-//apiRouter.post("/login");
-apiRouter.post("/register", (req, res) => apiController.createUserPost(req, res));
-apiRouter.get("/items", apiController.getItems);
-apiRouter.post("/items", apiController.postItems);
-apiRouter.post("/checkout", apiController.checkoutItems);
+apiRouter.post("/login", (req, res) => authenticationController.authenticateUser(req,res));
+apiRouter.post("/register", validationController.validateUserPost);
 apiRouter.get("/user:id", apiController.getUser);
+apiRouter.get("/items", apiController.getItems);
+apiRouter.post("/items", (req, res) => apiController.createItem(req,res));
+apiRouter.post("/checkout", (req, res) => apiController.createCheckout(req, res));
 apiRouter.get("/user/:id/orders", apiController.getOrders);
 
 
