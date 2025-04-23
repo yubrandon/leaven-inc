@@ -3,7 +3,7 @@
 //Return the index of the item if found
 export const hasItem = (item, list) => {
     const index = list.findIndex((val) => {
-      return (val.data.title === item.title);
+      return (val.name === item.name);
     }) 
     return index;
 };

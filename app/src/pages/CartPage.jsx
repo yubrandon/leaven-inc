@@ -2,10 +2,12 @@ import { useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import { ShopContext } from "../utils/ShopContext";
 import CartCard from "../components/CartCard";
+import { useNavigate } from "react-router-dom";
+import submitCart from "../utils/submitCart";
 
 const CartPage = () => {
-    const { cartItems, removeItem } = useContext(ShopContext);
-
+    const { userId, cartItems, removeItem, emptyCart } = useContext(ShopContext);
+    const navigate = useNavigate();
     return (
         <> 
             <NavigationBar />
@@ -13,10 +15,10 @@ const CartPage = () => {
                 {
                     cartItems.map((item) => {
                         if(item.quantity === 0) {
-                            removeItem(item.data);
+                            removeItem(item);
                         } else {
                             return <CartCard
-                                key={item.data.id}
+                                key={item.id}
                                 item={item}
                             ></CartCard>
                         }
@@ -25,8 +27,13 @@ const CartPage = () => {
                 {cartItems.length ? 
                 (   <button className="btn btn-outline-success col-2 mt-5"
                         onClick={() => {
-                            //push order to db
-                            //redirect to success page
+                            //alert("Your order has been placed!")
+                            //navigate("/");
+                            //create success page 
+
+                            submitCart(userId, cartItems);
+
+                            emptyCart();
                         }}
                     >Complete Order</button>
                 ) : (

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
 import { ShopContext } from './utils/ShopContext.jsx'
-import Item from "./utils/Item";
 import { hasItem } from './utils/contextUtils.js';
 
 const router = createBrowserRouter(routes);
@@ -34,7 +33,8 @@ const App = () => {
         setItemCount(itemCount + newItem.quantity - originalQuantity);
 
       } else {
-        const newItem = new Item(item,qty);
+        const newItem = item;
+        newItem.quantity = qty;
         //Update states with new item
         setCartItems([...cartItems, newItem]);
         setItemCount(itemCount + qty);
@@ -61,8 +61,12 @@ const App = () => {
       }
     }
   }
+  const emptyCart = () => {
+    setItemCount(0);
+    setCartItems([]);
+  }
   return (
-    <ShopContext.Provider value={{itemCount, cartItems, addItem, removeItem, editItem, 
+    <ShopContext.Provider value={{itemCount, cartItems, addItem, removeItem, editItem, emptyCart,
                                   userId, setUserId, userName, setUserName, admin, setAdmin}}>
       <RouterProvider router = { router } />
     </ShopContext.Provider>

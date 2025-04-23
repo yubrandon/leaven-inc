@@ -6,8 +6,9 @@ import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 import RegistrationPage from "../pages/RegistrationPage";
 import ServerErrorPage from "../pages/ServerErrorPage";
-import ItemForm from "../components/admin/itemForm";
-import ItemDashboard from "../components/admin/itemDashboard";
+import ItemForm from "../components/admin/ItemForm";
+import ItemDashboard from "../components/admin/ItemDashboard";
+import OrderDashboard from "../components/admin/OrderDashboard";
 
 const routes = [
     {
@@ -37,8 +38,8 @@ const routes = [
         errorElement: <ErrorPage />,
         children: [
             {   
-                path:"orders",
-                element: <CartPage />
+                path:"orders/view",
+                element: <OrderDashboard />
             },
             {
                 path:"items/add",

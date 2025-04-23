@@ -70,21 +70,22 @@ async function ordersGet() {
     const { rows } = await pool.query("SELECT * FROM orders");
     return rows;
 }
-async function ordersPost(order) {
-    const SQL = `
-    
+async function ordersPost(userId) {
+    const orderSQL = `
+        INSERT INTO orders (user_id) VALUES ($1)
     `;
-    await pool.query(SQL);
+    await pool.query(orderSQL, [userId]);
+    const idSQL = "SELECT id FROM orders ORDER BY id DESC LIMIT 1";
+    const { rows } = await pool.query(idSQL);
+    return rows[0].id;
 }
 async function salesGet() {
     const { rows } = await pool.query("SELECT * FROM sales");
     return rows;
 }
-async function salesPost(sale) {
-    const SQL = `
-    
-    `;
-    await pool.query(SQL);
+async function salesPost(orderId, itemId, itemQty) {
+    const SQL = "INSERT INTO sales VALUES ($1, $2, $3)";
+    await pool.query(SQL, [orderId, itemId, itemQty]);
 }
 
 module.exports = { userGet, usernameGet, userPost, itemExists, itemsGet, itemIdGet, itemsPost, imagesGet, imagesPost, 

@@ -39,16 +39,29 @@ async function addImage(req, res) {
     console.log('adding image');
     const { itemName, image } = req.body;
     const id = await db.itemIdGet(itemName);
-    console.log(id);
+    //console.log(id);
     await db.imagesPost(id, image);
 }
-async function createCheckout(req, res) {
-    
+async function createOrder(req, res) {
+    const { id } = req.body;
+    const orderId = await db.ordersPost(id);
+    createSales(req, res, orderId);
 }
 async function getOrders(req, res) {
     
 }
+async function getUserOrders(req, res) {
+    
+}
+
+async function createSales(req, res, orderId) {
+    const { items } = req.body;
+    items.map(async (item) => {
+        await db.salesPost(orderId, item.id, item.quantity);
+    });
+    res.status(200).json({msg:"ok"});
+}
 
 
 
-module.exports = { getUser, getItems, checkItem, createItem, createCheckout, getOrders };
+module.exports = { getUser, getItems, checkItem, createItem, createOrder, getOrders, getUserOrders };

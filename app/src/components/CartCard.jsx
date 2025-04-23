@@ -10,15 +10,15 @@ const CartCard = ({item}) => {
         <>
             <div className="container-fluid col-md-6 d-flex flex-row justify-content-between align-items-center border-bottom py-4 my-1 mb-2">
                 <div className="d-flex col-10">
-                    <img src={`${item.data.url}`} className="col-2 me-4" style={{width:'100px', height:'100px'}}/>
+                    <img src={`${item.url}`} className="col-2 me-4" style={{width:'100px', height:'100px'}}/>
                     <div className="col-10">
-                        <h5 className="mb-3">{item.data.name}</h5>
+                        <h5 className="mb-3">{item.name}</h5>
                         <div className="d-flex gap-3 align-items-center">
                             <p className="m-0">Quantity: </p>
                             <div className="col-2" >
                                 <div className="input-group">
                                     <button
-                                        onClick={() => {editItem(item.data, 0)}} 
+                                        onClick={() => {editItem(item, 0)}} 
                                         className="btn btn-outline-danger px-2"
                                     >-</button>
                                     <input 
@@ -28,7 +28,7 @@ const CartCard = ({item}) => {
                                         readOnly={true}
                                     ></input>
                                      <button 
-                                        onClick={() => {editItem(item.data, 1)}} 
+                                        onClick={() => {editItem(item, 1)}} 
                                         className="btn btn-outline-success px-2"
                                     >+</button>
                                 </div>
@@ -39,7 +39,7 @@ const CartCard = ({item}) => {
                 <button className="btn btn-danger d-flex justify-content-center" 
                         style={{height:'35px', width:'45px'}}
                         onClick={() => {
-                            removeItem(item.data);
+                            removeItem(item);
                         }}
                 >
                     <img src={deleteIcon} style={{filter:"invert(1)"}}/>

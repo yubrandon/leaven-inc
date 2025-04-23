@@ -12,7 +12,6 @@ const StorePage = () => {
     const { addItem } = useContext(ShopContext);
 
     useEffect(() => {
-        //link to real db when set up
         const getItems = async () => {
             const items = await getStoreItems()
                .catch((error) => setError(error));

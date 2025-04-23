@@ -11,5 +11,6 @@ export const ShopContext = createContext({
     userName: "",
     setUserName: () => {},
     admin: null,
-    setAdmin: () => {}
+    setAdmin: () => {},
+    emptyCart: () => {}
 });

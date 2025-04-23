@@ -62,6 +62,14 @@ const ProfilePage = () => {
                                                 }}
                                         >Edit Items</button>
                                     </div>
+                                    <div>
+                                        <button className="btn btn-outline-dark"
+                                                onClick={() => {
+                                                    navigate("orders/view");
+                                                }}
+                                        
+                                        >Check Orders</button>
+                                    </div> 
                                 </div>
 
                             ) : 

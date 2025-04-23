@@ -23,8 +23,9 @@ apiRouter.get("/user/:id", isAuth, apiController.getUser);
 apiRouter.post("/item-check", isAuth, apiController.checkItem);
 apiRouter.get("/items", apiController.getItems);
 apiRouter.post("/items", isAuth, isAdmin, apiController.createItem);
-apiRouter.post("/checkout", isAuth, apiController.createCheckout);
-apiRouter.get("/user/:id/orders", isAuth, apiController.getOrders);
+apiRouter.post("/orders", isAuth, apiController.createOrder);
+apiRouter.get("/orders", isAuth, isAdmin, apiController.getOrders);
+apiRouter.get("/user/:id/orders", isAuth, apiController.getUserOrders);
 
 apiRouter.get("/login-success", (req, res) => {
     res.status(200).json({msg: "Authentication Successful!", userId: req.user.id, userName: req.user.username, admin: req.user.admin});
