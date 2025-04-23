@@ -6,6 +6,8 @@ import LoginPage from "../pages/LoginPage";
 import ProfilePage from "../pages/ProfilePage";
 import RegistrationPage from "../pages/RegistrationPage";
 import ServerErrorPage from "../pages/ServerErrorPage";
+import ItemForm from "../components/admin/itemForm";
+import ItemDashboard from "../components/admin/itemDashboard";
 
 const routes = [
     {
@@ -30,8 +32,23 @@ const routes = [
         element: <LoginPage />
     },
     {
-        path:"profile",
-        element: <ProfilePage />
+        path:"profile/:username",
+        element: <ProfilePage />,
+        errorElement: <ErrorPage />,
+        children: [
+            {   
+                path:"orders",
+                element: <CartPage />
+            },
+            {
+                path:"items/add",
+                element: <ItemForm />
+            },
+            {
+                path:"items/edit",
+                element: <ItemDashboard />
+            },
+        ]
     },
     {
         path:"error",

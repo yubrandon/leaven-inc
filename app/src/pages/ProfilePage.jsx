@@ -1,16 +1,17 @@
 import NavigationBar from "../components/NavigationBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Outlet } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { ShopContext } from "../utils/ShopContext";
 
 const ProfilePage = () => {
     const { userId, userName, admin, setUserId, setUserName, setAdmin } = useContext(ShopContext);
     const navigate = useNavigate();
+    const { username } = useParams();
     useEffect(() => {
-        if(userId === null) {
+        if(userId === null || userName != username) {
             navigate("/login");
         }
-    })
+    }, []);
 
 
     const signOut = async () => {
@@ -38,34 +39,48 @@ const ProfilePage = () => {
     return (
         <>
             <NavigationBar />
-            {userId ? (<div></div>) : (<div></div>)}
-            <div className="container-fluid d-flex flex-row justify-content-center">
-                {
-                userId ? 
-                    (
-                        <div className="container-fluid d-flex flex-column col-3 align-items-center">
-                                <h1 className="mb-5">Hello {userName}!</h1>
-                                <div className="d-flex flex-column align-items-center">
+            <div className="container-fluid d-flex flex-row justify-content-center pt-4">
 
-                                <div className="container-fluid d-flex flex-column align-items-center mb-5">
-                                    <h4>Options</h4>
+                <div className="d-flex flex-column col-6 align-items-center">
+                        <h1 className="mb-5">Hello {admin ? "Noella" : userName}!</h1>
+                        <div className="d-flex flex-column align-items-center">
+
+                        {
+                            admin ? 
+                            (
+                                <div className="d-flex flex-column align-items-center mb-5">
                                     <div className="d-flex gap-3 p-3">
-                                        <button className="btn btn-outline-success">Add Item</button>
-                                        <button className="btn btn-outline-secondary border border-secondary">Edit Items</button>
+                                        <button className="btn btn-outline-success"
+                                                onClick={() => {
+                                                    navigate("items/add");
+                                                }}
+                                        
+                                        >Add Item</button>
+                                        <button className="btn btn-outline-secondary border border-secondary"
+                                                onClick={() => {
+                                                    navigate("items/edit");
+                                                }}
+                                        >Edit Items</button>
                                     </div>
                                 </div>
 
-                                <button className="btn btn-outline-danger"
-                                        onClick={signOut}
+                            ) : 
+                            (
+                                <div>
+                                </div>
+                            )
+                        }
+                        
 
-                                >Sign Out</button>
-                            </div>
-                            
-                        </div>
-                            
-                    ) : ({})
-                }    
-                
+                        <button className="btn btn-outline-danger"
+                                onClick={signOut}
+
+                        >Sign Out</button>
+                    </div>
+                    
+                </div>
+                <Outlet /> 
+
             </div>
         </>
     )

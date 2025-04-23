@@ -21,7 +21,8 @@ async function getItems(req, res)  {
 };
 
 async function createItem(req, res) {
-    
+    const { itemName, image } = req.body;
+    console.log(itemName,image);
 }
 async function createCheckout(req, res) {
     

@@ -28,7 +28,8 @@ const LoginPage = () => {
                 setUserId(json.userId);
                 setUserName(json.userName);
                 setAdmin(json.admin);
-                navigate("/profile");
+
+                navigate(`/profile/${json.userName}`);
             } else {
                 const newErrors = [json.msg];
                 setErrors(newErrors);

@@ -2,6 +2,7 @@ const { Router } = require("express");
 const apiController = require("../controllers/apiController");
 const validationController = require("../controllers/validationController");
 const isAuth = require("./authMiddleware").isAuth;
+const isAdmin = require("./authMiddleware").isAdmin;
 const apiRouter = Router();
 const passport = require("passport");
 
@@ -20,8 +21,8 @@ apiRouter.get("/logout", (req, res, next) => {
 apiRouter.post("/register", validationController.validateUserPost);
 apiRouter.get("/user/:id", isAuth, apiController.getUser);
 apiRouter.get("/items", apiController.getItems);
-apiRouter.post("/items", (req, res) => apiController.createItem(req,res));
-apiRouter.post("/checkout", (req, res) => apiController.createCheckout(req, res));
+apiRouter.post("/items", isAuth, isAdmin, apiController.createItem);
+apiRouter.post("/checkout", isAuth, apiController.createCheckout);
 apiRouter.get("/user/:id/orders", isAuth, apiController.getOrders);
 
 apiRouter.get("/login-success", (req, res) => {

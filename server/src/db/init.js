@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS images (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     item_id INTEGER NOT NULL,
     url VARCHAR(255) NOT NULL,
+    asset_id VARCHAR(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (item_id) REFERENCES items(id)
 );
@@ -53,8 +54,7 @@ async function main() {
     });
     await client.connect();
     await client.query(SQL);
-    await client.query(adminConfig, 
-        ['admin', await bcrypt.hash(process.env.DB_PASSWORD, 10), true]);
+    await client.query(adminConfig,['admin', await bcrypt.hash(process.env.DB_PASSWORD, 10), true]);
     await client.end();
     console.log("done");
 }
