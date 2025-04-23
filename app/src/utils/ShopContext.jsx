@@ -5,5 +5,11 @@ export const ShopContext = createContext({
     cartItems: [],
     addItem: () => {},
     removeItem: () => {},
-    editItem: () => {}
+    editItem: () => {},
+    userId: null,
+    setUserId: () => {},
+    userName: "",
+    setUserName: () => {},
+    admin: null,
+    setAdmin: () => {}
 });

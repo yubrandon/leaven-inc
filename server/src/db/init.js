@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const { Client } = require("pg");
+const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const SQL = `
@@ -11,7 +12,6 @@ CREATE TABLE IF NOT EXISTS users (
     admin BOOL DEFAULT false,
     PRIMARY KEY (id)
 );
-
 CREATE TABLE IF NOT EXISTS items (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     name VARCHAR (255) NOT NULL,
@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS sales (
 );
 `;
 
+const adminConfig = `
+INSERT INTO users (username, password, admin) VALUES ($1, $2, $3);`;
 
 async function main() {
     console.log('seeding');
@@ -51,6 +53,8 @@ async function main() {
     });
     await client.connect();
     await client.query(SQL);
+    await client.query(adminConfig, 
+        ['admin', await bcrypt.hash(process.env.DB_PASSWORD, 10), true]);
     await client.end();
     console.log("done");
 }

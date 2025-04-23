@@ -7,6 +7,10 @@ import { hasItem } from './utils/contextUtils.js';
 
 const router = createBrowserRouter(routes);
 const App = () => {
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
+  const [admin, setAdmin] = useState(false);
+
   const [itemCount, setItemCount] = useState(0);
   const [cartItems, setCartItems] = useState([]);
 
@@ -58,7 +62,8 @@ const App = () => {
     }
   }
   return (
-    <ShopContext.Provider value={{itemCount, cartItems, addItem, removeItem, editItem}}>
+    <ShopContext.Provider value={{itemCount, cartItems, addItem, removeItem, editItem, 
+                                  userId, setUserId, userName, setUserName, admin, setAdmin}}>
       <RouterProvider router = { router } />
     </ShopContext.Provider>
   )

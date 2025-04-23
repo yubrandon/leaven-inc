@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import shoppingCart from "../assets/shoppingCart.svg";
 
 const NavigationBar = () => {
-    const { itemCount } = useContext(ShopContext);
+    const { itemCount, userId } = useContext(ShopContext);
     return (
         <nav className="navbar px-4 bg-dark pb-2 mb-2">
             <div>
@@ -12,8 +12,15 @@ const NavigationBar = () => {
             </div>
             <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center pe-2">
-                    <Link to="/profile" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Account</strong></p></Link>
-                    <Link to="/store" className="link-underline link-underline-opacity-0 pe-4"><p className="text-light m-0"><strong>Store</strong></p></Link>
+                    
+                    <Link   to= {userId ? "/profile" : "/login"}
+                            className="link-underline link-underline-opacity-0 pe-4">
+                                <p className="text-light m-0"><strong>Account</strong></p>
+                    </Link>
+                    <Link   to="/store" 
+                            className="link-underline link-underline-opacity-0 pe-4">
+                                <p className="text-light m-0"><strong>Store</strong></p>
+                    </Link>
                 </div>
                 <Link to="/cart">
                     <button type="button" className="btn btn-primary position-relative px-3">

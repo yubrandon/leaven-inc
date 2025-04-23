@@ -6,29 +6,32 @@ const apiRouter = Router();
 const passport = require("passport");
 
 apiRouter.post("/login", passport.authenticate("local", {
-    successRedirect: "/api/success",
-    failureRedirect: "/api/failure"
+    successRedirect: "/api/login-success",
+    failureRedirect: "/api/login-failure"
 }));
 apiRouter.get("/logout", (req, res, next) => {
     req.logout((err) => {
         if(err) {
             return next(err);
         }
-        res.redirect("/");
+        res.redirect("/api/logout-success");
     });
 });
 apiRouter.post("/register", validationController.validateUserPost);
-apiRouter.get("/user:id", isAuth, apiController.getUser);
+apiRouter.get("/user/:id", isAuth, apiController.getUser);
 apiRouter.get("/items", apiController.getItems);
 apiRouter.post("/items", (req, res) => apiController.createItem(req,res));
 apiRouter.post("/checkout", (req, res) => apiController.createCheckout(req, res));
 apiRouter.get("/user/:id/orders", isAuth, apiController.getOrders);
 
-apiRouter.get("/success", (req, res) => {
-    res.status(200).json({msg: "Authentication Successful!"});
+apiRouter.get("/login-success", (req, res) => {
+    res.status(200).json({msg: "Authentication Successful!", userId: req.user.id, userName: req.user.username, admin: req.user.admin});
 })
-apiRouter.get("/failure", (req, res) => {
-    res.status(400).json({msg: "Authentication Failed"});
+apiRouter.get("/login-failure", (req, res) => {
+    res.status(400).json({msg: "Login failed! Check your username or password!"});
+})
+apiRouter.get("/logout-success", (req, res) => {
+    res.status(200).json({msg: "Logout Successful!"});
 })
 
 apiRouter.get("/protected", isAuth, (req, res) => {

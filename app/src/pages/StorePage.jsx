@@ -30,7 +30,7 @@ const StorePage = () => {
                         (   <h1 className="text-center pt-3">Error! {error}</h1>
                         ) : (
                             <div className="container-fluid py-2 px-3 d-flex flex-column align-items-center">
-                                <h1 className="mb-3">Check out the current items!</h1>
+                                <h1 className="mb-3"></h1>
                                 <div className="container-fluid d-flex flex-row flex-wrap justify-content-center pt-3" style={{gap:'50px'}}>
                                     {   data.map((item) => {
                                             return <ItemCard 

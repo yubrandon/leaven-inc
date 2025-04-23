@@ -1,9 +1,16 @@
 const db = require("../db/queries.js");
 
 async function getUser(req, res) {
-    const { id } = req.query;
-    await db.userGet(id);
-    res.status(200).send({message:"ok"});
+    const { id } = req.params;
+    console.log('fetching user id:',id);
+    const user = await db.userGet(id);
+    console.log(user);
+    if(Object.values(user.length)) {
+        res.status(200).json({msg:"ok"});
+    } else {
+        res.status(404).json({msg: "user not found!"});
+    }
+    
 }
 
 

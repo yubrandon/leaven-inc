@@ -1,7 +1,11 @@
 import { useNavigate, Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
+import { useContext, useState } from "react";
+import { ShopContext } from "../utils/ShopContext";
 
 const LoginPage = () => {
+    const { setUserId, setUserName, setAdmin } = useContext(ShopContext);
+    const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,13 +21,17 @@ const LoginPage = () => {
                 credentials: "include",
                 body: JSON.stringify(user),
             });
-            console.log(response);
+            //console.log(response);
             const json = await response.json();
             console.log(json);
             if(response.ok) {
+                setUserId(json.userId);
+                setUserName(json.userName);
+                setAdmin(json.admin);
                 navigate("/profile");
             } else {
-                //TODO: connect session on front end side
+                const newErrors = [json.msg];
+                setErrors(newErrors);
             }
         };
         await login();
@@ -54,6 +62,18 @@ const LoginPage = () => {
                         className="btn btn-outline-success my-3 row col-1"
                     >Log in</button>
                     <Link to="/register"><p>Don't have an account? Register now!</p></Link>
+                    {
+                        errors ? (
+                            errors.map((err) => {
+                                return  <p  className="mt-2"
+                                style={{color:'red'}}
+                            >{err}</p>
+                            })
+                           
+                        ) : (
+                            {}
+                        )
+                    }
                 </div>
             </form>
         </>
