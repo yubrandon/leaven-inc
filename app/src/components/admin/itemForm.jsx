@@ -46,7 +46,7 @@ const ItemForm = () => {
                     });
                     //console.log(response);
                     const json = await response.json();
-                    //console.log(json);
+                    console.log(json);
                     imageData = {url: json.url, assetId: json.asset_id};
                 }
                 await uploadImage();

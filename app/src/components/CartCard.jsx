@@ -10,9 +10,9 @@ const CartCard = ({item}) => {
         <>
             <div className="container-fluid col-md-6 d-flex flex-row justify-content-between align-items-center border-bottom py-4 my-1 mb-2">
                 <div className="d-flex col-10">
-                    <img src={`${item.data.image}`} className="col-2 me-4" style={{width:'100px', height:'100px'}}/>
+                    <img src={`${item.data.url}`} className="col-2 me-4" style={{width:'100px', height:'100px'}}/>
                     <div className="col-10">
-                        <h5 className="mb-3">{item.data.title}</h5>
+                        <h5 className="mb-3">{item.data.name}</h5>
                         <div className="d-flex gap-3 align-items-center">
                             <p className="m-0">Quantity: </p>
                             <div className="col-2" >

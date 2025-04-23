@@ -3,6 +3,7 @@ import NavigationBar from "../components/NavigationBar";
 import ItemCard from "../components/ItemCard";
 import fetchItems from "../utils/fetchItems";
 import { ShopContext } from "../utils/ShopContext";
+import getStoreItems from "../utils/getStoreItems";
 
 const StorePage = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +14,7 @@ const StorePage = () => {
     useEffect(() => {
         //link to real db when set up
         const getItems = async () => {
-            const items = await fetchItems()
+            const items = await getStoreItems()
                .catch((error) => setError(error));
             setData(items);
             setIsLoading(false);

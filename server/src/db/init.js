@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS items (
 CREATE TABLE IF NOT EXISTS images (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     item_id INTEGER NOT NULL,
-    url VARCHAR(255) NOT NULL,
+    url VARCHAR(255) NOT NULL DEFAULT 'https://asset.cloudinary.com/dlm75mx0p/b216cc86d4aee39814b25d69a5f3bebd',
     asset_id VARCHAR(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (item_id) REFERENCES items(id)

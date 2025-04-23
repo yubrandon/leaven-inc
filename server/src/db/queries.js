@@ -48,8 +48,8 @@ async function itemsPost(itemName) {
 
 
 //IMAGES
-async function imagesGet(id) {
-    const { rows } = await pool.query("SELECT * FROM images WHERE item_id = $1", [id]);
+async function imagesGet() {
+    const { rows } = await pool.query("SELECT * FROM images");
     return rows;
 }
 

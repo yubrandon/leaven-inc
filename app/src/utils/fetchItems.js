@@ -1,4 +1,4 @@
-const fetchItems = await (async () => {
+const fetchItems = async () => {
     const indexes = [...Array(21).keys()].slice(1);   //array of values 1-20
     const data = await Promise.all(
         indexes.map(async (id) => {
@@ -15,6 +15,6 @@ const fetchItems = await (async () => {
         })
     );
     return data;
-})
+}
 
 export default fetchItems;

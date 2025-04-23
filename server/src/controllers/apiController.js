@@ -17,7 +17,7 @@ async function getUser(req, res) {
 async function getItems(req, res)  {
     const items = await db.itemsGet();
     const images = await db.imagesGet();
-    console.log(items);
+    res.status(200).json({items: items, images: images});
 };
 async function checkItem(req, res) {
     const { itemName } = req.body;
