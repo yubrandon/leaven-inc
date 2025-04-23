@@ -48,7 +48,9 @@ async function createOrder(req, res) {
     createSales(req, res, orderId);
 }
 async function getOrders(req, res) {
-    
+    const orders = await db.ordersGet();
+    const sales = await db.salesGet();
+    res.status(200).json({orders: orders, sales: sales});
 }
 async function getUserOrders(req, res) {
     
