@@ -16,42 +16,66 @@ const ItemForm = () => {
             setError(["Make sure your files have the correct format!"]);
         }
         
-        console.log(name, file);
+        //console.log(name, file);
         if(!error.length) {
-            var imageData;
-            /*const uploadImage = async () => {
-                //FormData needed to make File object serializable
-                //https://stackoverflow.com/questions/74824013/how-to-upload-an-image-to-cloudinary-with-fetch
-                const data = new FormData();
-                data.append('file', file);
-                data.append('upload_preset', 'default');
-                const response = await fetch(`${import.meta.env.VITE_IMAGE_URL}/upload`, {
-                    method:"POST",
-                    body: data,
-                });
+            const checkItem = async () => {
+                const url = `${import.meta.env.VITE_API_URL}/item-check`;
+                const response = fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({itemName: name}),                
+                })
+                return response;
+            }
+            const itemStatus = await checkItem();
+            //console.log(itemStatus);
+            if(itemStatus.ok) {
+                var imageData;
+                const uploadImage = async () => {
+                    //FormData needed to make File object serializable
+                    //https://stackoverflow.com/questions/74824013/how-to-upload-an-image-to-cloudinary-with-fetch
+                    const data = new FormData();
+                    data.append('file', file);
+                    data.append('upload_preset', 'default');
+                    const response = await fetch(`${import.meta.env.VITE_IMAGE_URL}/upload`, {
+                        method:"POST",
+                        body: data,
+                    });
+                    //console.log(response);
+                    const json = await response.json();
+                    //console.log(json);
+                    imageData = {url: json.url, assetId: json.asset_id};
+                }
+                await uploadImage();
+                //console.log(imageData);
+                const url = `${import.meta.env.VITE_API_URL}/items`;
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({
+                        itemName: name,
+                        image: imageData
+                    }),
+                })
                 //console.log(response);
                 const json = await response.json();
                 //console.log(json);
-                imageData = {url: json.url, assetId: json.asset_id};
+                if(response.ok) {
+                    //navigate("/profile");
+                } else {
+                    //alert(`${json.msg}`);
+                }
+            } else {
+                const json = await itemStatus.json();
+                alert(json.msg);
             }
-            await uploadImage();*/
-            imageData = {url: "longurl", assetId: "longId"};
-            console.log(imageData);
-            const url = `${import.meta.env.VITE_API_URL}/items`;
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                    itemName: name,
-                    image: imageData
-                }),
-            })
-            console.log(response);
-            const json = await response.json();
-            console.log(json);
+            
         }
     }
     return (

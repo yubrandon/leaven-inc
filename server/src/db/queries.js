@@ -1,5 +1,6 @@
 const pool = require("./pool");
 
+//USERS
 async function userGet(id) {
     const { rows } = await pool.query("SELECT * FROM users WHERE id=$1", [id]);
     return rows;
@@ -12,30 +13,59 @@ async function userPost(user) {
     const SQL = `
         INSERT INTO users (username, password) VALUES ($1, $2)
     `;
-    const res = await pool.query(SQL, Object.values(user));
-    //return res;
+    await pool.query(SQL, Object.values(user));
+}
+
+
+
+
+//ITEMS
+async function itemExists(itemName) {
+    const { rows } = await pool.query("SELECT * FROM items WHERE name=$1", [itemName]);
+    if(rows.length) return true;
+    return false;
 }
 async function itemsGet() {
     const { rows } = await pool.query("SELECT * FROM items");
     return rows;
 }
-async function itemsPost(item) {
+async function itemIdGet(itemName) {
     const SQL = `
-    
-    `;
-    await pool.query(SQL);
+        SELECT id FROM items WHERE name = ($1)
+    `
+    const { rows } = await pool.query(SQL, [itemName]);
+    return rows[0];
 }
-async function imagesGet() {
-    const { rows } = await pool.query("SELECT * FROM images");
+async function itemsPost(itemName) {
+    const SQL = `
+        INSERT INTO items (name) VALUES ($1) 
+    `;
+    await pool.query(SQL, [itemName]);
+    console.log('item uploaded!');
+}
+
+
+
+
+//IMAGES
+async function imagesGet(id) {
+    const { rows } = await pool.query("SELECT * FROM images WHERE item_id = $1", [id]);
     return rows;
 }
 
-async function imagesPost(image) {
-    const SQL = `const { rows } = 
-    
-    `;
-    await pool.query(SQL);
+async function imagesPost(id, image) {
+    const SQL = `
+        INSERT INTO images (item_id, url, asset_id) VALUES ($1, $2, $3)
+    `; 
+    await pool.query(SQL, [id.id, image.url, image.assetId]);
+    console.log('image uploaded!');
 }
+
+
+
+
+
+//ORDERS + SALES
 async function ordersGet() {
     const { rows } = await pool.query("SELECT * FROM orders");
     return rows;
@@ -57,6 +87,6 @@ async function salesPost(sale) {
     await pool.query(SQL);
 }
 
-module.exports = { userGet, usernameGet, userPost, itemsGet, itemsPost, imagesGet, imagesPost, 
+module.exports = { userGet, usernameGet, userPost, itemExists, itemsGet, itemIdGet, itemsPost, imagesGet, imagesPost, 
                     ordersGet, ordersPost, salesGet, salesPost
                 };

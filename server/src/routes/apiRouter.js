@@ -20,6 +20,7 @@ apiRouter.get("/logout", (req, res, next) => {
 });
 apiRouter.post("/register", validationController.validateUserPost);
 apiRouter.get("/user/:id", isAuth, apiController.getUser);
+apiRouter.post("/item-check", isAuth, apiController.checkItem);
 apiRouter.get("/items", apiController.getItems);
 apiRouter.post("/items", isAuth, isAdmin, apiController.createItem);
 apiRouter.post("/checkout", isAuth, apiController.createCheckout);

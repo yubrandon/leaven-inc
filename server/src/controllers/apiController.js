@@ -19,10 +19,28 @@ async function getItems(req, res)  {
     const images = await db.imagesGet();
     console.log(items);
 };
-
+async function checkItem(req, res) {
+    const { itemName } = req.body;
+    const exists = await db.itemExists(itemName);
+    if(exists){
+        res.status(400).json({msg: 'Item already exists!'});
+    } else {
+        res.status(200).json({msg: 'Item does not exist!'});
+    }
+}
 async function createItem(req, res) {
+    const { itemName, images } = req.body;
+    await db.itemsPost(itemName);
+    await addImage(req,res);
+
+}
+
+async function addImage(req, res) {
+    console.log('adding image');
     const { itemName, image } = req.body;
-    console.log(itemName,image);
+    const id = await db.itemIdGet(itemName);
+    console.log(id);
+    await db.imagesPost(id, image);
 }
 async function createCheckout(req, res) {
     
@@ -33,4 +51,4 @@ async function getOrders(req, res) {
 
 
 
-module.exports = { getUser, getItems, createItem, createCheckout, getOrders };
+module.exports = { getUser, getItems, checkItem, createItem, createCheckout, getOrders };
