@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import getStoreItems from "../../utils/getStoreItems";
 
 const ItemForm = () => {
     const navigate = useNavigate();
@@ -18,21 +19,14 @@ const ItemForm = () => {
         
         //console.log(name, file);
         if(!error.length) {
-            const checkItem = async () => {
-                const url = `${import.meta.env.VITE_API_URL}/item-check`;
-                const response = fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({itemName: name}),                
-                })
-                return response;
-            }
-            const itemStatus = await checkItem();
+            const items = await getStoreItems();
+            var newItem = true;
+            items.map((item) => {
+                if(name === item.name) newItem = false;
+            });
+
             //console.log(itemStatus);
-            if(itemStatus.ok) {
+            if(newItem) {
                 var imageData;
                 const uploadImage = async () => {
                     //FormData needed to make File object serializable

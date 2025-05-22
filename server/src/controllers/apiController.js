@@ -19,17 +19,8 @@ async function getItems(req, res)  {
     const images = await db.imagesGet();
     res.status(200).json({items: items, images: images});
 };
-async function checkItem(req, res) {
-    const { itemName } = req.body;
-    const exists = await db.itemExists(itemName);
-    if(exists){
-        res.status(400).json({msg: 'Item already exists!'});
-    } else {
-        res.status(200).json({msg: 'Item does not exist!'});
-    }
-}
 async function createItem(req, res) {
-    const { itemName, images } = req.body;
+    const { itemName } = req.body;
     await db.itemsPost(itemName);
     await addImage(req,res);
 
@@ -52,9 +43,6 @@ async function getOrders(req, res) {
     const sales = await db.salesGet();
     res.status(200).json({orders: orders, sales: sales});
 }
-async function getUserOrders(req, res) {
-    
-}
 
 async function createSales(req, res, orderId) {
     const { items } = req.body;
@@ -66,4 +54,4 @@ async function createSales(req, res, orderId) {
 
 
 
-module.exports = { getUser, getItems, checkItem, createItem, createOrder, getOrders, getUserOrders };
+module.exports = { getUser, getItems, createItem, createOrder, getOrders };

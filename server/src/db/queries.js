@@ -1,93 +1,46 @@
 const pool = require("./pool");
+const User = require("./queries/users");
+const Item = require("./queries/items");
+const Order = require("./queries/orders");
 
-//USERS
 async function userGet(id) {
-    const { rows } = await pool.query("SELECT * FROM users WHERE id=$1", [id]);
-    return rows;
+    return User.userGet(id);
 }
 async function usernameGet(username) {
-    const { rows } = await pool.query("SELECT * FROM users WHERE username=$1", [username]);
-    return rows;
+    return User.usernameGet(username);
 }
 async function userPost(user) {
-    const SQL = `
-        INSERT INTO users (username, password) VALUES ($1, $2)
-    `;
-    await pool.query(SQL, Object.values(user));
-}
-
-
-
-
-//ITEMS
-async function itemExists(itemName) {
-    const { rows } = await pool.query("SELECT * FROM items WHERE name=$1", [itemName]);
-    if(rows.length) return true;
-    return false;
+    return User.userPost(user);
 }
 async function itemsGet() {
-    const { rows } = await pool.query("SELECT * FROM items");
-    return rows;
+    return Item.itemsGet();
 }
 async function itemIdGet(itemName) {
-    const SQL = `
-        SELECT id FROM items WHERE name = ($1)
-    `
-    const { rows } = await pool.query(SQL, [itemName]);
-    return rows[0];
+    return Item.itemIdGet(itemName);
 }
 async function itemsPost(itemName) {
-    const SQL = `
-        INSERT INTO items (name) VALUES ($1) 
-    `;
-    await pool.query(SQL, [itemName]);
-    console.log('item uploaded!');
+    return Item.itemsPost(itemName);
 }
-
-
-
-
-//IMAGES
 async function imagesGet() {
-    const { rows } = await pool.query("SELECT * FROM images");
-    return rows;
+    return Item.imagesGet();
 }
-
 async function imagesPost(id, image) {
-    const SQL = `
-        INSERT INTO images (item_id, url, asset_id) VALUES ($1, $2, $3)
-    `; 
-    await pool.query(SQL, [id.id, image.url, image.assetId]);
-    console.log('image uploaded!');
+    return Item.imagesGet(id, image);
 }
 
-
-
-
-
-//ORDERS + SALES
 async function ordersGet() {
-    const { rows } = await pool.query("SELECT * FROM orders");
-    return rows;
+    return Order.ordersGet();
 }
 async function ordersPost(userId) {
-    const orderSQL = `
-        INSERT INTO orders (user_id) VALUES ($1)
-    `;
-    await pool.query(orderSQL, [userId]);
-    const idSQL = "SELECT id FROM orders ORDER BY id DESC LIMIT 1";
-    const { rows } = await pool.query(idSQL);
-    return rows[0].id;
+    return Order.ordersPost(userId);
 }
 async function salesGet() {
-    const { rows } = await pool.query("SELECT * FROM sales");
-    return rows;
+    return Order.salesGet();
 }
 async function salesPost(orderId, itemId, itemQty) {
-    const SQL = "INSERT INTO sales VALUES ($1, $2, $3)";
-    await pool.query(SQL, [orderId, itemId, itemQty]);
+    return Order.salesPost(orderId, itemId, itemQty);
 }
 
-module.exports = { userGet, usernameGet, userPost, itemExists, itemsGet, itemIdGet, itemsPost, imagesGet, imagesPost, 
+module.exports = { userGet, usernameGet, userPost, itemsGet, itemIdGet, itemsPost, imagesGet, imagesPost, 
                     ordersGet, ordersPost, salesGet, salesPost
                 };

@@ -45,7 +45,7 @@ const ProfilePage = () => {
                         <h1 className="mb-5">Hello {admin ? "Noella" : userName}!</h1>
                         <div className="d-flex flex-column align-items-center">
 
-                        {
+                        {//move to admin page when done
                             admin ? 
                             (
                                 <div className="d-flex flex-column align-items-center mb-5">

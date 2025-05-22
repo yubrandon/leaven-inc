@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ItemCard from "../components/ItemCard";
-import fetchItems from "../utils/fetchItems";
 import { ShopContext } from "../utils/ShopContext";
 import getStoreItems from "../utils/getStoreItems";
 

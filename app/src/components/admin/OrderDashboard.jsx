@@ -14,6 +14,7 @@ const orderDashboard = () => {
             setIsLoading(false);
         }
         fetchOrders();
+        console.log(data);
     }, []);
     return (
         <div className="container-fluid d-flex justify-content-center border-start">
@@ -23,32 +24,42 @@ const orderDashboard = () => {
                 ) : (error ? 
                 (   <h2>Error! {error}</h2>
                 ) : (
-                    <div className="d-flex flex-column align-items-center">
+                    <div className="d-flex flex-column align-items-center col-9">
+                        <div className="accordion col-12" id="orderAccordion">
                         {
-                            //accordion object to show individual transactions
-        
                             data.orders.map((order) => {
-                                return <div className="d-flex flex-column align-items-center gap-3">
-                                    <div className="d-flex flex-row justify-content-center gap-5">
-                                        <strong><p>Order #{order.id}</p></strong>
-                                        <p>Customer: {order.user_id}</p>
+                                return (
+                                <div className="accordion-item">
+                                    <h2 className="accordion-header">
+                                        <button className="accordion-button" data-bs-toggle="collapse" 
+                                            data-bs-target={`#collapse${order.id}`}
+                                        >Order #{order.id}</button>
+                                        
+                                    </h2>
+                                    <div className="accordion-collapse collapse" id={`collapse${order.id}`}
+                                        data-bs-parent="#orderAccordion" >
+                                        <div className="accordion-body">
+                                            <p>Customer: {order.username}</p>
+                                            <ul>
+                                            {data.sales.map((item) => {
+                                                //add join with item name in server
+                                            if(item.order_id == order.id) {
+                                                return <li className="d-flex flex-row justify-content-between">
+                                                    <p>{item.name}</p>
+                                                    <p>Quantity: {item.quantity}</p>
+                                                </li>
+                                                }
+                                            })
+                                            }                                   
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <ul>
-                                    {data.sales.map((item) => {
-                                    if(item.order_id == order.id) {
-                                        return <li className="d-flex flex-row justify-content-center gap-5">
-                                            <p>Item:{item.item_id}</p>
-                                            <p>Quantity: {item.quantity}</p>
-                                        </li>
-                                        }
-                                    })
-                                    }                                   
-                                    </ul>
-                                
                                 </div>
+                                )
                                 
                             })
                         }
+                        </div>
                     </div>
                 )
                 )
