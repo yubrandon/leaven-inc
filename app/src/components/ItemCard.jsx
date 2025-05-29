@@ -7,9 +7,9 @@ const ItemCard = ({item, onClick}) => {
 
     return (
         <>
-            <div className="container-fluid d-flex flex-column align-items-center justify-content-between border rounded-3 py-3" style={{width:'250px', height:'450px'}}>
-                <img src={item.url} className="mb-4 p-1" style={{width:'200px', height:'200px'}}/>
-                <p className="card-title mb-3">{item.name}</p>
+            <div className="container-fluid d-flex flex-column align-items-center justify-content-between border rounded-3 py-3" style={{width:'400px', height:'450px'}}>
+                <img src={item.url} className="" style={{width:'300px', height:'200px'}}/>
+                <h5 className="card-title mb-1">{item.name}</h5>
                 <div className="col-md-6 mb-3">
                     <div className="input-group">
                         <button className="btn btn-outline-secondary " 
