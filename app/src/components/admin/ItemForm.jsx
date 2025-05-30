@@ -61,7 +61,7 @@ const ItemForm = () => {
                 const json = await response.json();
                 //console.log(json);
                 if(response.ok) {
-                    //navigate("/profile");
+                    //navigate("/store");
                 } else {
                     //alert(`${json.msg}`);
                 }

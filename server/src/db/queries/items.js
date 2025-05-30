@@ -2,7 +2,7 @@ const pool = require("../pool");
 
 // Fetch items
 module.exports.itemsGet = async function itemsGet() {
-    const { rows } = await pool.query("SELECT * FROM items");
+    const { rows } = await pool.query("SELECT items.id, name, description, url, asset_id FROM (items JOIN images ON items.id = images.item_id)");
     return rows;
 }
 // Auxilliary function - fetch id of a new item in order to reference for image entry

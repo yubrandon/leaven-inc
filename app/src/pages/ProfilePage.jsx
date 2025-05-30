@@ -2,6 +2,7 @@ import NavigationBar from "../components/NavigationBar";
 import { useNavigate, useParams, Outlet } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { ShopContext } from "../utils/ShopContext";
+import AdminPage from "./AdminPage";
 
 const ProfilePage = () => {
     const { userId, userName, admin, setUserId, setUserName, setAdmin } = useContext(ShopContext);
@@ -48,30 +49,7 @@ const ProfilePage = () => {
                         {//move to admin page when done
                             admin ? 
                             (
-                                <div className="d-flex flex-column align-items-center mb-5">
-                                    <div className="d-flex gap-3 p-3">
-                                        <button className="btn btn-outline-success"
-                                                onClick={() => {
-                                                    navigate("items/add");
-                                                }}
-                                        
-                                        >Add Item</button>
-                                        <button className="btn btn-outline-secondary border border-secondary"
-                                                onClick={() => {
-                                                    navigate("items/edit");
-                                                }}
-                                        >Edit Items</button>
-                                    </div>
-                                    <div>
-                                        <button className="btn btn-outline-dark"
-                                                onClick={() => {
-                                                    navigate("orders/view");
-                                                }}
-                                        
-                                        >Check Orders</button>
-                                    </div> 
-                                </div>
-
+                                <AdminPage />
                             ) : 
                             (
                                 <div>

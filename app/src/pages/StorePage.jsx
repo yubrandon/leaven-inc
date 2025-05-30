@@ -15,7 +15,7 @@ const StorePage = () => {
             const items = await getStoreItems()
                .catch((error) => setError(error));
             setData(items);
-            setIsLoading(false);
+            setIsLoading(false);   
         }
         getItems();
     }, []);

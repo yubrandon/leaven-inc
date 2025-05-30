@@ -25,6 +25,7 @@ const orderDashboard = () => {
                 (   <h2>Error! {error}</h2>
                 ) : (
                     <div className="d-flex flex-column align-items-center col-9">
+                        <h3 className="mb-3">View Orders</h3>
                         <div className="accordion col-12" id="orderAccordion">
                         {
                             data.orders.map((order) => {
