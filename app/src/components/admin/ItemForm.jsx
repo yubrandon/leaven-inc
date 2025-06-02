@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import getStoreItems from "../../utils/getStoreItems";
+import uploadCloudImage from "../../utils/uploadCloudImage";
+import uploadDbImage from "../../utils/uploadDbImage";
 
 const ItemForm = () => {
+    const [error, setError] = useState([]);
     const navigate = useNavigate();
-    const [error, setError] = useState([])
     const handleSubmit = async (e) => {
         e.preventDefault();
+        //Retrieve data from form
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
         const name = data.itemName;
         const file = data.itemImage;
+        //Check valid file
         if(file.name.endsWith(".jpg") || file.name.endsWith(".png")) {
             setError([]);
         } else {
@@ -19,55 +23,25 @@ const ItemForm = () => {
         
         //console.log(name, file);
         if(!error.length) {
+            //Check if item with same name already
             const items = await getStoreItems();
             var newItem = true;
             items.map((item) => {
                 if(name === item.name) newItem = false;
             });
 
-            //console.log(itemStatus);
             if(newItem) {
-                var imageData;
-                const uploadImage = async () => {
-                    //FormData needed to make File object serializable
-                    //https://stackoverflow.com/questions/74824013/how-to-upload-an-image-to-cloudinary-with-fetch
-                    const data = new FormData();
-                    data.append('file', file);
-                    data.append('upload_preset', 'default');
-                    const response = await fetch(`${import.meta.env.VITE_IMAGE_URL}/upload`, {
-                        method:"POST",
-                        body: data,
-                    });
-                    //console.log(response);
-                    const json = await response.json();
-                    console.log(json);
-                    imageData = {url: json.url, assetId: json.asset_id};
+                const imageData = await uploadCloudImage(file);
+                const dbImage = await uploadDbImage(name, imageData);
+                if(dbImage.ok) {
+                    navigate("/store");
+                } 
+                else {
+                    alert(`${json.msg}`);
                 }
-                await uploadImage();
-                //console.log(imageData);
-                const url = `${import.meta.env.VITE_API_URL}/items`;
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                    body: JSON.stringify({
-                        itemName: name,
-                        image: imageData
-                    }),
-                })
-                //console.log(response);
-                const json = await response.json();
-                //console.log(json);
-                if(response.ok) {
-                    //navigate("/store");
-                } else {
-                    //alert(`${json.msg}`);
-                }
-            } else {
-                const json = await itemStatus.json();
-                alert(json.msg);
+            } 
+            else {
+                alert('An item with the same name already exists!');
             }
             
         }

@@ -7,7 +7,15 @@ const ItemDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
-    const navigate = useNavigate();
+
+    //Form will set current name as the placeholder, and will function similar to the add item form
+    //On click, retrieve id and name of the item, set modal data, and display modal
+    //modalData: {item_id: integer, item_name: string (current name)}
+    const [modalData, setModalData] = useState(null);
+    const editModal = (id, name) => {
+        setModalData({item_id: id, item_name: name});
+        console.log(modalData);
+    }
 
     useEffect(() => {
         const getItems = async () => {
@@ -35,6 +43,7 @@ const ItemDashboard = () => {
                                     return <ItemDashboardCard 
                                                 key={item.id}
                                                 item={item}
+                                                handleClick={editModal}
                                             ></ItemDashboardCard>
                                 })}
                         </div>

@@ -9,7 +9,8 @@ module.exports.itemsGet = async function itemsGet() {
 module.exports.itemIdGet = async function itemIdGet(itemName) {
     const SQL = `
         SELECT id FROM items WHERE name = ($1)
-    `
+    `;
+    const data = await pool.query(SQL, [itemName]);
     const { rows } = await pool.query(SQL, [itemName]);
     return rows[0];
 }
@@ -32,5 +33,4 @@ module.exports.imagesPost = async function imagesPost(id, image) {
         INSERT INTO images (item_id, url, asset_id) VALUES ($1, $2, $3)
     `; 
     await pool.query(SQL, [id.id, image.url, image.assetId]);
-    console.log('image uploaded!');
 }

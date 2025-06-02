@@ -9,12 +9,11 @@ const orderDashboard = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             const orders = await getAllOrders()
-                .catch((error) => setError(error)) ;
+                .catch((error) => setError(error));
             setData(orders);
             setIsLoading(false);
         }
         fetchOrders();
-        console.log(data);
     }, []);
     return (
         <div className="container-fluid d-flex justify-content-center border-start">

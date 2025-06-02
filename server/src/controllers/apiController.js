@@ -23,14 +23,11 @@ async function createItem(req, res) {
     const { itemName } = req.body;
     await db.itemsPost(itemName);
     await addImage(req,res);
-
 }
 
 async function addImage(req, res) {
-    console.log('adding image');
     const { itemName, image } = req.body;
     const id = await db.itemIdGet(itemName);
-    //console.log(id);
     await db.imagesPost(id, image);
 }
 async function createOrder(req, res) {
