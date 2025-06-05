@@ -34,3 +34,27 @@ module.exports.imagesPost = async function imagesPost(id, image) {
     `; 
     await pool.query(SQL, [id.id, image.url, image.assetId]);
 }
+//Check if the item name exists
+module.exports.itemCheck = async function itemCheck(name) {
+    const SQL = `
+        SELECT items.id, name, asset_id FROM (items JOIN images ON items.id = images.item_id) WHERE name = $1;
+    `;
+    const { rows } = await pool.query(SQL, [name]);
+    return rows;
+}
+//Update item name
+module.exports.updateItemName = async function updateItemName(id, name) {
+    const SQL = `
+        UPDATE items SET name = ($1) WHERE id = ($2)
+    `;
+    await pool.query(SQL, [name, id]);
+    console.log('item name updated');
+}
+//Update image info
+module.exports.updateItemImage = async function updateItemImage(id, image) {
+    const SQL = `
+        UPDATE images SET URL = ($1), asset_id = ($2) WHERE item_id = ($3)
+    `;
+    const res = await pool.query(SQL, [image.url, image.assetId, id]);
+    console.log('item image updated');
+}

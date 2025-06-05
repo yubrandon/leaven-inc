@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import getStoreItems from "../../utils/getStoreItems";
 import uploadCloudImage from "../../utils/uploadCloudImage";
 import uploadDbImage from "../../utils/uploadDbImage";
+import checkItemName from "../../utils/checkItemName";
 
 const ItemForm = () => {
     const [error, setError] = useState([]);
@@ -24,13 +24,9 @@ const ItemForm = () => {
         //console.log(name, file);
         if(!error.length) {
             //Check if item with same name already
-            const items = await getStoreItems();
-            var newItem = true;
-            items.map((item) => {
-                if(name === item.name) newItem = false;
-            });
+            const item = await checkItemName();
 
-            if(newItem) {
+            if(!item.exists) {
                 const imageData = await uploadCloudImage(file);
                 const dbImage = await uploadDbImage(name, imageData);
                 if(dbImage.ok) {

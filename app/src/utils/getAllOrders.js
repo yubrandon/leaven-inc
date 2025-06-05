@@ -1,4 +1,3 @@
-
 const getAllOrders = async () => {
     const url = `${import.meta.env.VITE_API_URL}/orders`;
     const response = await fetch(url, {

@@ -21,7 +21,9 @@ apiRouter.get("/logout", (req, res, next) => {
 apiRouter.post("/register", validationController.validateUserPost);
 apiRouter.get("/user/:id", isAuth, apiController.getUser);
 apiRouter.get("/items", apiController.getItems);
+apiRouter.get("/items/:name", isAuth, isAdmin, apiController.getItem);
 apiRouter.post("/items", isAuth, isAdmin, apiController.createItem);
+apiRouter.post("/items/:id", apiController.editItem);
 apiRouter.post("/orders", isAuth, apiController.createOrder);
 apiRouter.get("/orders", isAuth, isAdmin, apiController.getOrders);
 

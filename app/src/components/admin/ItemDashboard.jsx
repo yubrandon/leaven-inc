@@ -2,21 +2,59 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import getStoreItems from "../../utils/getStoreItems";
 import ItemDashboardCard from "./ItemDashboardCard";
+import uploadCloudImage from "../../utils/uploadCloudImage";
+import checkItemName from "../../utils/checkItemName";
+import updateItem from "../../utils/updateItem";
 
 const ItemDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
+    const navigate = useNavigate();
 
     //Form will set current name as the placeholder, and will function similar to the add item form
     //On click, retrieve id and name of the item, set modal data, and display modal
     //modalData: {item_id: integer, item_name: string (current name)}
-    const [modalData, setModalData] = useState(null);
+    const [originalName, setOriginalName] = useState('');
+    const [itemId, setItemId] = useState('');
+    const [itemName, setItemName] = useState('');
     const editModal = (id, name) => {
-        setModalData({item_id: id, item_name: name});
-        console.log(modalData);
+        setItemId(id);
+        setItemName(name);
+        setOriginalName(name);
     }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        //Retrieve data from form
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        const file = data.itemImage;
+        //Check valid file
+        if(!file.name.endsWith(".jpg") && !file.name.endsWith(".png")) {
+            console.log(file.name);
+            alert("Make sure your files have the correct format!");
+        }
+        //Get asset_id for original image
+        const item = await checkItemName(originalName);
 
+        //Upload new image to the cloud
+        const imageData = await uploadCloudImage(file);
+        const itemData = {}
+        itemData.id = itemId;
+        itemData.name = itemName;
+        itemData.asset_id = item.asset_id;
+        itemData.image = imageData;
+        const update = await updateItem(itemData);
+        if(update.ok) {
+            navigate("/store");
+        } 
+        else {
+            alert(`${json.msg}`);
+        }
+        
+        
+        
+    }
     useEffect(() => {
         const getItems = async () => {
             const items = await getStoreItems()
@@ -25,10 +63,53 @@ const ItemDashboard = () => {
             setIsLoading(false);
         }
         getItems();
-        
     }, []);
 
     return (
+    <>
+        <div className="modal fade" id="itemModal" tabIndex="-1" aria-labelledby="itemModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h1 className="modal-title fs-5" id="itemModalLabel">Edit Item</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                        <form onSubmit={handleSubmit} method="POST" className="d-flex flex-column">
+                            <label htmlFor="itemName" className="form-label mb-3">
+                                Item Name
+                                <input  type="text" 
+                                        name="itemName"
+                                        className="form-control"
+                                        id="itemName"
+                                        value={itemName}
+                                        onChange={e => (setItemName(e.target.value))}
+                                        required
+                                ></input>
+                            </label>
+                            <label htmlFor="formFileNultiple" className="form-label mb-4">
+                                Image
+                                <input  type="file"
+                                        name="itemImage"
+                                        className="form-control"
+                                        id="formFileNultiple"
+                                        multiple
+                                ></input>
+                                <div id="passwordHelpBlock" className="form-text">
+                                    Upload an image (.png, .jpg)
+                                </div>
+                            </label>
+                            <div className="d-flex justify-content-center">
+                                <button    
+                                    type="submit"
+                                    className="btn btn-primary"
+                                >Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div className="container-fluid d-flex justify-content-center border-start">
             {isLoading ? 
                 (<h1 className="text-center pt-3">Loading...</h1>)
@@ -52,12 +133,8 @@ const ItemDashboard = () => {
             }
             
         </div>
+    </>
     )
 }
 
 export default ItemDashboard;
-
-/**
- * Delete images using asset_id in db
- * https://cloudinary.com/documentation/image_upload_api_reference#destroy_by_asset_id
- */

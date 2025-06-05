@@ -27,6 +27,9 @@ async function imagesGet() {
 async function imagesPost(id, image) {
     return await Item.imagesPost(id, image);
 }
+async function itemCheck(name) {
+    return await Item.itemCheck(name);
+}
 
 async function ordersGet() {
     return await Order.ordersGet();
@@ -41,6 +44,7 @@ async function salesPost(orderId, itemId, itemQty) {
     return await Order.salesPost(orderId, itemId, itemQty);
 }
 
-module.exports = { userGet, usernameGet, userPost, itemsGet, itemIdGet, itemsPost, imagesGet, imagesPost, 
+module.exports = { userGet, usernameGet, userPost, itemsGet, itemIdGet, itemsPost, imagesGet, imagesPost,
+                    itemCheck, 
                     ordersGet, ordersPost, salesGet, salesPost
                 };

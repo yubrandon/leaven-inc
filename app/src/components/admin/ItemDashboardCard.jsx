@@ -13,6 +13,8 @@ const ItemDashboardCard = ({item, handleClick}) => {
                         className="btn btn-outline-secondary px-3" 
                         style={{height:'40px'}}
                         onClick={click}
+                        data-bs-toggle="modal"
+                        data-bs-target="#itemModal"
                 >Edit</button>
             </div>
         </div>
