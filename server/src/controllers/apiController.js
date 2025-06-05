@@ -43,8 +43,15 @@ async function editItem(req, res) {
     if(item.image) {
         await Item.updateItemImage(id, item.image);
     }
+    res.status(200).json({msg: "ok"});
     //WIP: delete original image
     //const del = deleteCloudImage(item.asset_id);
+}
+async function deleteItem(req, res) {
+    const { id } = req.params;
+    console.log('item id: ', id)
+    await Item.deleteItem(id);
+    res.status(200).json({msg:"item deleted"});
 }
 
 async function addImage(req, res) {
@@ -73,4 +80,5 @@ async function createSales(req, res, orderId) {
 
 
 
-module.exports = { getUser, getItem, getItems, createItem, editItem, createOrder, getOrders };
+module.exports = { getUser, getItem, getItems, createItem, editItem, deleteItem,
+                 createOrder, getOrders };

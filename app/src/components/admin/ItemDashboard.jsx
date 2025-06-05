@@ -5,6 +5,7 @@ import ItemDashboardCard from "./ItemDashboardCard";
 import uploadCloudImage from "../../utils/uploadCloudImage";
 import checkItemName from "../../utils/checkItemName";
 import updateItem from "../../utils/updateItem";
+import deleteItemById from "../../utils/deleteItemById";
 
 const ItemDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -56,14 +57,28 @@ const ItemDashboard = () => {
             itemData.asset_id = item.asset_id;
             itemData.image = imageData;
             const update = await updateItem(itemData);
+            console.log(update);
             if(update.ok) {
+
                 navigate("/store");
             } 
             else {
-                alert(`${json.msg}`);
+                alert(`Failed to update item!`);
             }
         }  
         
+    }
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+        const del = await deleteItemById(itemId);
+        if(del.ok) {
+            navigate("/store");
+        }
+        else {
+            alert(`Failed to delete item!`);
+        }
+
     }
     useEffect(() => {
         const getItems = async () => {
@@ -111,10 +126,18 @@ const ItemDashboard = () => {
                                 </div>
                                 
                             </label>
-                            <div className="d-flex justify-content-center">
+                            <div className="d-flex justify-content-between">
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={handleDelete}
+                                    data-bs-target="itemModal"
+                                    data-bs-toggle="modal"
+                                >Delete</button>
                                 <button    
                                     type="submit"
                                     className="btn btn-primary"
+                                    data-bs-target="itemModal"
+                                    data-bs-toggle="modal"
                                 >Save Changes</button>
                             </div>
                         </form>

@@ -20,12 +20,11 @@ CREATE TABLE IF NOT EXISTS items (
 );
 
 CREATE TABLE IF NOT EXISTS images (
-    id INTEGER GENERATED ALWAYS AS IDENTITY,
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     item_id INTEGER NOT NULL,
-    url VARCHAR(255) NOT NULL DEFAULT,
+    url VARCHAR(255) NOT NULL DEFAULT http://res.cloudinary.com/dlm75mx0p/image/upload/v1749090545/no-image-icon-23485_ifkrhl.png,
     asset_id VARCHAR(255),
-    PRIMARY KEY (ID),
-    FOREIGN KEY (item_id) REFERENCES items(id)
+    FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS orders (

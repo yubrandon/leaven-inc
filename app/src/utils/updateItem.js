@@ -13,8 +13,6 @@ const updateItem = async (itemData) => {
         body: JSON.stringify(itemData)
     })
     return response;
-    //const json = await response.json();
-    //return json;
 
 }
 

@@ -58,3 +58,15 @@ module.exports.updateItemImage = async function updateItemImage(id, image) {
     const res = await pool.query(SQL, [image.url, image.assetId, id]);
     console.log('item image updated');
 }
+//Delete item
+module.exports.deleteItem = async function deleteItem(id) {
+    const imageQuery = `
+        DELETE FROM images WHERE item_id = $1
+    `;
+    await pool.query(imageQuery, [id]);
+    const itemQuery = `
+        DELETE FROM items WHERE id = $1
+    `;
+    await pool.query(itemQuery, [id]);
+    
+}
