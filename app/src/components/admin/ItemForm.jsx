@@ -55,12 +55,12 @@ const ItemForm = () => {
                                 required
                         ></input>
                     </label>
-                    <label htmlFor="formFileNultiple" className="form-label mb-4">
+                    <label htmlFor="formFileMultiple" className="form-label mb-4">
                         Image
                         <input  type="file"
                                 name="itemImage"
                                 className="form-control"
-                                id="formFileNultiple"
+                                id="formFileMultiple"
                                 multiple
                         ></input>
                         <div id="passwordHelpBlock" className="form-text">

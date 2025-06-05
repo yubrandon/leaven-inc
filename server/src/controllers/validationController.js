@@ -1,4 +1,4 @@
-const db = require("../db/queries.js");
+const User = require("../db/queries/users");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 
@@ -28,7 +28,7 @@ const validateUserPost = [
 
 async function checkUniqueName(req, res) {
     //If username already exists in db, display error
-    const users = await db.usernameGet(req.body.username);
+    const users = await User.usernameGet(req.body.username);
     const matchingNames = Object.values(users).length;
     if(matchingNames) {
         res.status(400).send([{msg: "Username is already taken."}]);        
@@ -43,7 +43,7 @@ async function createUser(req, res) {
     //Add user to db
     const user = req.body;
     user.password = await bcrypt.hash(user.password, 10);
-    await db.userPost(user);
+    await User.userPost(user);
     res.status(200).send({message:"ok"});
 }
 

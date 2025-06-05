@@ -18,6 +18,7 @@ const ItemDashboard = () => {
     const [originalName, setOriginalName] = useState('');
     const [itemId, setItemId] = useState('');
     const [itemName, setItemName] = useState('');
+    const [image, setImage] = useState('');
     const editModal = (id, name) => {
         setItemId(id);
         setItemName(name);
@@ -29,30 +30,39 @@ const ItemDashboard = () => {
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData);
         const file = data.itemImage;
-        //Check valid file
-        if(!file.name.endsWith(".jpg") && !file.name.endsWith(".png")) {
-            console.log(file.name);
-            alert("Make sure your files have the correct format!");
+        //Check valid file if file is being changed
+        if(itemName === originalName && !file.size) {
+            alert('No changes have been made!');
         }
-        //Get asset_id for original image
-        const item = await checkItemName(originalName);
-
-        //Upload new image to the cloud
-        const imageData = await uploadCloudImage(file);
-        const itemData = {}
-        itemData.id = itemId;
-        itemData.name = itemName;
-        itemData.asset_id = item.asset_id;
-        itemData.image = imageData;
-        const update = await updateItem(itemData);
-        if(update.ok) {
-            navigate("/store");
-        } 
         else {
-            alert(`${json.msg}`);
-        }
-        
-        
+            if(file.size){
+                if(!file.name.endsWith(".jpg") && !file.name.endsWith(".png")) {
+                    console.log(file.name);
+                    alert("Make sure your files have the correct format!");
+                }
+            }
+            
+            //Get asset_id for original item
+            const item = await checkItemName(originalName);
+    
+            //Upload new image to the cloud if file is uploaded
+            var imageData = false;
+            if(file.size) {
+                imageData = await uploadCloudImage(file);
+            }
+            const itemData = {}
+            itemData.id = itemId;
+            itemData.name = itemName;
+            itemData.asset_id = item.asset_id;
+            itemData.image = imageData;
+            const update = await updateItem(itemData);
+            if(update.ok) {
+                navigate("/store");
+            } 
+            else {
+                alert(`${json.msg}`);
+            }
+        }  
         
     }
     useEffect(() => {
@@ -72,7 +82,8 @@ const ItemDashboard = () => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h1 className="modal-title fs-5" id="itemModalLabel">Edit Item</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                onClick={e => (setImage(''))}></button>
                     </div>
                     <div className="modal-body">
                         <form onSubmit={handleSubmit} method="POST" className="d-flex flex-column">
@@ -84,20 +95,21 @@ const ItemDashboard = () => {
                                         id="itemName"
                                         value={itemName}
                                         onChange={e => (setItemName(e.target.value))}
-                                        required
                                 ></input>
                             </label>
-                            <label htmlFor="formFileNultiple" className="form-label mb-4">
+                            <label htmlFor="formFileMultiple" className="form-label mb-4">
                                 Image
                                 <input  type="file"
                                         name="itemImage"
                                         className="form-control"
-                                        id="formFileNultiple"
-                                        multiple
+                                        id="formFileMultiple"
+                                        value={image}
+                                        onChange={e => (setImage(e.target.value))}
                                 ></input>
                                 <div id="passwordHelpBlock" className="form-text">
                                     Upload an image (.png, .jpg)
                                 </div>
+                                
                             </label>
                             <div className="d-flex justify-content-center">
                                 <button    

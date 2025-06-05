@@ -12,8 +12,9 @@ const updateItem = async (itemData) => {
         credentials: "include",
         body: JSON.stringify(itemData)
     })
-    const json = await response.json();
-    return json;
+    return response;
+    //const json = await response.json();
+    //return json;
 
 }
 

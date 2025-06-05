@@ -1,10 +1,11 @@
-const db = require("../db/queries.js");
+const User = require("../db/queries/users");
 const Item = require("../db/queries/items");
+const Order = require("../db/queries/orders");
 
 async function getUser(req, res) {
     const { id } = req.params;
     console.log('fetching user id:',id);
-    const user = await db.userGet(id);
+    const user = await User.userGet(id);
     console.log(user);
     if(Object.values(user.length)) {
         res.status(200).json({msg:"ok"});
@@ -16,7 +17,7 @@ async function getUser(req, res) {
 
 async function getItem(req, res) {
     const { name } = req.params;
-    const item = await db.itemCheck(name);
+    const item = await Item.itemCheck(name);
     if(item.length) {
         res.status(200).send(item[0]);
     }
@@ -26,45 +27,46 @@ async function getItem(req, res) {
 
 }
 async function getItems(req, res)  {
-    const items = await db.itemsGet();
-    const images = await db.imagesGet();
+    const items = await Item.itemsGet();
+    const images = await Item.imagesGet();
     res.status(200).json({items: items, images: images});
 };
 async function createItem(req, res) {
     const { itemName } = req.body;
-    await db.itemsPost(itemName);
+    await Item.itemsPost(itemName);
     await addImage(req,res);
 }
 async function editItem(req, res) {
     const { id } = req.params;
     const item = req.body;
-    console.log('body', item);
     await Item.updateItemName(id, item.name);
-    await Item.updateItemImage(id, item.image);
+    if(item.image) {
+        await Item.updateItemImage(id, item.image);
+    }
     //WIP: delete original image
     //const del = deleteCloudImage(item.asset_id);
 }
 
 async function addImage(req, res) {
     const { itemName, image } = req.body;
-    const id = await db.itemIdGet(itemName);
-    await db.imagesPost(id, image);
+    const id = await Item.itemIdGet(itemName);
+    await Item.imagesPost(id, image);
 }
 async function createOrder(req, res) {
     const { id } = req.body;
-    const orderId = await db.ordersPost(id);
+    const orderId = await Order.ordersPost(id);
     createSales(req, res, orderId);
 }
 async function getOrders(req, res) {
-    const orders = await db.ordersGet();
-    const sales = await db.salesGet();
+    const orders = await Order.ordersGet();
+    const sales = await Order.salesGet();
     res.status(200).json({orders: orders, sales: sales});
 }
 
 async function createSales(req, res, orderId) {
     const { items } = req.body;
     items.map(async (item) => {
-        await db.salesPost(orderId, item.id, item.quantity);
+        await Order.salesPost(orderId, item.id, item.quantity);
     });
     res.status(200).json({msg:"ok"});
 }
