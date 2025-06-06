@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
+import registerUser from "../utils/registerUser";
 
 const RegistrationPage = () => {
     const [errorList, setErrorList] = useState([]);
@@ -9,28 +10,16 @@ const RegistrationPage = () => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const user = Object.fromEntries(formData);
-        const register = async () => {
-            const url = `${import.meta.env.VITE_API_URL}/register`;
-            const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type" : "application/json",
-                    },
-                    body: JSON.stringify(user),
-                }
-            );
-            const json = await response.json();
-            if(response.ok) {
-                navigate("login");
-            } else {
-                const errors = [];
-                json.forEach((error) => {
-                    errors.push(error.msg);
-                })
-                setErrorList(errors);
-            }   
-        }
-        await register();
+        const response = await registerUser(user); 
+        if(response.ok) {
+            navigate("../login");
+        } else {
+            const errors = [];
+            response.forEach((error) => {
+                errors.push(error.msg);
+            })
+            setErrorList(errors);
+        }   
     }
     return ( 
         <>
@@ -43,13 +32,24 @@ const RegistrationPage = () => {
                             <input  type="text" 
                                     name="username" 
                                     className="form-control"
+                                    required
                             ></input>
                         </label>
                     </div>
                     <div className="mb-3 row col-2">
                         <label htmlFor="password" className="form-label">
                             Password
-                            <input type="password" name="password" className="form-control"></input>
+                            <input type="password" name="password" className="form-control" required></input>
+                        </label>
+                    </div>
+                    <div className="my-3 row col-2">
+                        <label htmlFor="email" className="form-label">
+                            Email
+                            <input  type="email" 
+                                    name="email" 
+                                    className="form-control"
+                                    required
+                            ></input>
                         </label>
                     </div>
                     <button 

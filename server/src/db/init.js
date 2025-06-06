@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     username VARCHAR (255) NOT NULL,
     password VARCHAR (255) NOT NULL,
+    email VARCHAR (255),
     admin BOOL DEFAULT false,
     PRIMARY KEY (id)
 );

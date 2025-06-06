@@ -13,7 +13,7 @@ module.exports.usernameGet = async function usernameGet(username) {
 // Create a new user
 module.exports.userPost = async function userPost(user) {
     const SQL = `
-        INSERT INTO users (username, password) VALUES ($1, $2)
+        INSERT INTO users (username, password, email) VALUES ($1, $2, $3)
     `;
     await pool.query(SQL, Object.values(user));
 }
