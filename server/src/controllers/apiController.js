@@ -47,11 +47,23 @@ async function editItem(req, res) {
     //WIP: delete original image
     //const del = deleteCloudImage(item.asset_id);
 }
+/*
 async function deleteItem(req, res) {
     const { id } = req.params;
     console.log('item id: ', id)
     await Item.deleteItem(id);
     res.status(200).json({msg:"item deleted"});
+}*/
+async function toggleItem(req, res) {
+    const { id } = req.params;
+    const state = await Item.toggleHide(id);
+    console.log('hidden: ',state.hidden);
+    if(state.hidden) {
+        res.status(200).json({msg: "Item has been hidden!"});
+    }
+    else {
+        res.status(200).json({msg: "Item is now displayed!"});
+    }
 }
 
 async function addImage(req, res) {
@@ -73,7 +85,6 @@ async function updateOrder(req, res) {
     const { id } = req.params;
     await Order.setComplete(id);
     res.status(200).json({msg:"completion status updated"});
-    console.log('updated order: ',id);
 }
 
 async function createSales(req, res, orderId) {
@@ -86,5 +97,5 @@ async function createSales(req, res, orderId) {
 
 
 
-module.exports = { getUser, getItem, getItems, createItem, editItem, deleteItem,
+module.exports = { getUser, getItem, getItems, createItem, editItem, toggleItem,
                  createOrder, getOrders, updateOrder };

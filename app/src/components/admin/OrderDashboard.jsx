@@ -43,7 +43,7 @@ const orderDashboard = () => {
                         {
                             data.orders.map((order) => {
                                 return (
-                                <div className="accordion-item">
+                                <div key={`order-${order.id}`} className="accordion-item">
                                     <h2 className="accordion-header">
                                         <button className="accordion-button" data-bs-toggle="collapse" 
                                             data-bs-target={`#collapse${order.id}`}
@@ -70,7 +70,7 @@ const orderDashboard = () => {
                                             <ul>
                                             {data.sales.map((item) => {
                                             if(item.order_id == order.id) {
-                                                return <li className="d-flex flex-row justify-content-between">
+                                                return <li key={`item-${item.id}-order-${order.id}`} className="d-flex flex-row justify-content-between">
                                                     <p>{item.name}</p>
                                                     <p>Quantity: {item.quantity}</p>
                                                 </li>

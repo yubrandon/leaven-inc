@@ -29,4 +29,5 @@ module.exports.salesPost = async function salesPost(orderId, itemId, itemQty) {
 module.exports.setComplete = async function setComplete(id) {
     const SQL = `UPDATE orders SET completed = true WHERE id = $1`;
     await pool.query(SQL, [id]);
+    console.log('updated order: ',id);
 }

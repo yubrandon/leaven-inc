@@ -32,13 +32,16 @@ const StorePage = () => {
                                 <h1 className="mb-3"></h1>
                                 <div className="container-fluid d-flex flex-row flex-wrap justify-content-center pt-3" style={{gap:'50px'}}>
                                     {   data.map((item) => {
-                                            return <ItemCard 
-                                                key={item.id}
-                                                item={item}
-                                                onClick={(item, qty) => {
-                                                    addItem(item,qty);
-                                                }}
-                                            ></ItemCard>
+                                            if(!item.hidden) {
+                                                return <ItemCard 
+                                                    key={item.id}
+                                                    item={item}
+                                                    onClick={(item, qty) => {
+                                                        addItem(item,qty);
+                                                    }}
+                                                ></ItemCard>
+                                            }
+                                            
                                         })
                                     }                                
                                 </div>

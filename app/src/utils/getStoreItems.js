@@ -18,9 +18,12 @@ const getStoreItems = async() => {
             images.map((image) => {
                 if(!found && image.item_id == item.id) {
                     found = true;
-                    itemData.push({id: item.id, name: item.name, desc:item.desc, url:image.url, aid: image.asset_id});
+                    itemData.push({id: item.id, name: item.name, 
+                        desc:item.desc, url:image.url, 
+                        aid: image.asset_id, hidden: (item.hidden ? true : false)});
                 }
             });
+            
         });
         //console.log(itemData);
         return itemData;

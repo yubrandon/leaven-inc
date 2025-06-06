@@ -5,7 +5,7 @@ import ItemDashboardCard from "./ItemDashboardCard";
 import uploadCloudImage from "../../utils/uploadCloudImage";
 import checkItemName from "../../utils/checkItemName";
 import updateItem from "../../utils/updateItem";
-import deleteItemById from "../../utils/deleteItemById";
+import toggleHideItem from "../../utils/toggleHideItem";
 
 const ItemDashboard = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -20,10 +20,12 @@ const ItemDashboard = () => {
     const [itemId, setItemId] = useState('');
     const [itemName, setItemName] = useState('');
     const [image, setImage] = useState('');
-    const editModal = (id, name) => {
+    const [hidden, setHidden] = useState(false);
+    const editModal = (id, name, hidden) => {
         setItemId(id);
         setItemName(name);
         setOriginalName(name);
+        setHidden(hidden);
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,15 +70,16 @@ const ItemDashboard = () => {
         }  
         
     }
-    const handleDelete = async (e) => {
+    const handleHide = async (e) => {
         e.preventDefault();
-
-        const del = await deleteItemById(itemId);
-        if(del.ok) {
-            navigate("/store");
+        const response = await toggleHideItem(itemId);
+        if(response.ok) {
+            const json = await response.json();
+            navigate("..");
+            alert(json.msg);
         }
         else {
-            alert(`Failed to delete item!`);
+            alert(`Failed to hide item!`);
         }
 
     }
@@ -127,12 +130,23 @@ const ItemDashboard = () => {
                                 
                             </label>
                             <div className="d-flex justify-content-between">
+                            {
+                                hidden ? 
                                 <button
-                                    className="btn btn-danger"
-                                    onClick={handleDelete}
+                                    className="btn btn-success"
+                                    onClick={handleHide}
                                     data-bs-target="itemModal"
                                     data-bs-toggle="modal"
-                                >Delete</button>
+                                >Show Item</button>
+                                : 
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={handleHide}
+                                    data-bs-target="itemModal"
+                                    data-bs-toggle="modal"
+                                >Hide Item</button>
+                            }
+                                
                                 <button    
                                     type="submit"
                                     className="btn btn-primary"
