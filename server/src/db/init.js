@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS items (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     name VARCHAR (255) NOT NULL,
     description VARCHAR (255) DEFAULT NULL,
+    hidden BOOL DEFAULT false,
     PRIMARY KEY (id)
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE IF NOT EXISTS images (
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     user_id INTEGER NOT NULL,
+    completed BOOL DEFAULT false,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
