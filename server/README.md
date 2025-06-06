@@ -16,8 +16,8 @@
 ### `/items/:id`
 `POST - Update any new information for an item using its id`
 
-### `/items/:id/delete`
-`POST - Delete an item and its image entry`
+### `/items/:id/hide`
+`POST - Hide an item from displaying in the store page`
 
 ### `/orders`
 `POST - Add a new order to the database`

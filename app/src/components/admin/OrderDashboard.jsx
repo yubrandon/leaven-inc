@@ -1,11 +1,25 @@
 import { useEffect, useState } from "react";
 import getAllOrders from "../../utils/getAllOrders";
-
+import { useNavigate } from "react-router-dom";
+import updateOrderComplete from "../../utils/updateOrderComplete";
 
 const orderDashboard = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const handleComplete = async (e) => {
+        console.log('setting complete');
+        const res = await updateOrderComplete(e.target.value);
+        if(res.ok) {
+            navigate("..");
+            alert('Order marked complete!');
+        }
+        else {
+            alert("Error updating order! Try again later.");
+        }
+        
+    }
     useEffect(() => {
         const fetchOrders = async () => {
             const orders = await getAllOrders()
@@ -39,10 +53,22 @@ const orderDashboard = () => {
                                     <div className="accordion-collapse collapse" id={`collapse${order.id}`}
                                         data-bs-parent="#orderAccordion" >
                                         <div className="accordion-body">
-                                            <p>Customer: {order.username}</p>
+                                            <div className="d-flex flex-row justify-content-between">
+                                                <p>Customer: {order.username}</p>
+                                                <div>
+                                                    {order.completed ? 
+                                                        <strong>Order Completed</strong>
+                                                    :
+                                                        <button className="btn btn-outline-success d-flex align-items-center" 
+                                                                style={{height:"30px"}}
+                                                                onClick={handleComplete}
+                                                                value={order.id}
+                                                                >Complete Order</button>
+                                                    }
+                                                </div>
+                                            </div>
                                             <ul>
                                             {data.sales.map((item) => {
-                                                //add join with item name in server
                                             if(item.order_id == order.id) {
                                                 return <li className="d-flex flex-row justify-content-between">
                                                     <p>{item.name}</p>

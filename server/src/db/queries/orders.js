@@ -2,7 +2,7 @@ const pool = require("../pool");
 
 // Fetch list of orders
 module.exports.ordersGet = async function ordersGet() {
-    const { rows } = await pool.query("SELECT orders.id, username FROM (orders JOIN users ON user_id=users.id)");
+    const { rows } = await pool.query("SELECT orders.id, username, completed FROM (orders JOIN users ON user_id=users.id) ORDER BY orders.id");
     return rows;
 }
 // Create a new order
@@ -24,4 +24,9 @@ module.exports.salesGet = async function salesGet() {
 module.exports.salesPost = async function salesPost(orderId, itemId, itemQty) {
     const SQL = "INSERT INTO sales VALUES ($1, $2, $3)";
     await pool.query(SQL, [orderId, itemId, itemQty]);
+}
+//Mark an order as complete
+module.exports.setComplete = async function setComplete(id) {
+    const SQL = `UPDATE orders SET completed = true WHERE id = $1`;
+    await pool.query(SQL, [id]);
 }
