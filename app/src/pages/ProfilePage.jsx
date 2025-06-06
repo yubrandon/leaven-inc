@@ -3,6 +3,7 @@ import { useNavigate, useParams, Outlet } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { ShopContext } from "../utils/ShopContext";
 import AdminPage from "./AdminPage";
+import UserPage from "./UserPage";
 
 const ProfilePage = () => {
     const { userId, userName, admin, setUserId, setUserName, setAdmin } = useContext(ShopContext);
@@ -52,8 +53,7 @@ const ProfilePage = () => {
                                 <AdminPage />
                             ) : 
                             (
-                                <div>
-                                </div>
+                                <UserPage />
                             )
                         }
                         

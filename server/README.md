@@ -1,4 +1,4 @@
-# Endpoints
+# API Endpoints
 
 ### `/register`
 `POST - Add a user to database` 
@@ -9,6 +9,15 @@
 ### `/items`
 `POST - Add a new item to database`
 `GET  - Fetch list of all items and related info`
+
+### `/items/:name`
+`GET  - Fetch info for a specific item using its name`
+
+### `/items/:id`
+`POST - Update any new information for an item using its id`
+
+### `/items/:id/delete`
+`POST - Delete an item and its image entry`
 
 ### `/orders`
 `POST - Add a new order to the database`
