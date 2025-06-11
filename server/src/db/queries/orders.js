@@ -5,7 +5,7 @@ module.exports.ordersGet = async function ordersGet() {
     const SQL = `
         SELECT orders.id, username, completed 
         FROM (orders JOIN users ON user_id=users.id) 
-        ORDER BY orders.id
+        ORDER BY completed DESC, orders.id
         `;
     const { rows } = await pool.query(SQL);
     return rows;
@@ -60,7 +60,7 @@ module.exports.ordersGetId = async function ordersGetId(id) {
 
 module.exports.salesGetId = async function salesGetId(id) {
     const SQL = `
-        SELECT order_id, name, quantity FROM (sales JOIN items ON sales.item_id = items.id) 
+        SELECT order_id, items.id, name, quantity FROM (sales JOIN items ON sales.item_id = items.id) 
         WHERE order_id IN (
             SELECT orders.id FROM (orders JOIN users ON orders.user_id = users.id) WHERE users.id = $1
             )

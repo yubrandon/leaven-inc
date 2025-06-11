@@ -27,9 +27,8 @@ const CartPage = () => {
                 {cartItems.length ? 
                 (   <button className="btn btn-outline-success col-2 mt-5"
                         onClick={() => {
-                            //alert("Your order has been placed!")
-                            //navigate("/");
-                            //create success page 
+                            alert("Your order has been placed!")
+                            navigate("/store");
 
                             submitCart(userId, cartItems);
 

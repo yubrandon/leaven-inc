@@ -22,7 +22,7 @@ const AdminPage = () => {
                 <div>
                     <button className="btn btn-outline-dark"
                             onClick={() => {
-                                navigate("orders/view");
+                                navigate("orders/view/admin");
                             }}
                     
                     >Check Orders</button>

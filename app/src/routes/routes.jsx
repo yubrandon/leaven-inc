@@ -9,6 +9,7 @@ import ServerErrorPage from "../pages/ServerErrorPage";
 import ItemForm from "../components/admin/ItemForm";
 import ItemDashboard from "../components/admin/ItemDashboard";
 import OrderDashboard from "../components/admin/OrderDashboard";
+import OrderHistory from "../components/OrderHistory";
 
 const routes = [
     {
@@ -38,7 +39,7 @@ const routes = [
         errorElement: <ErrorPage />,
         children: [
             {   
-                path:"orders/view",
+                path:"orders/view/admin",
                 element: <OrderDashboard />
             },
             {
@@ -49,6 +50,10 @@ const routes = [
                 path:"items/edit",
                 element: <ItemDashboard />
             },
+            {
+                path:"orders/view",
+                element: <OrderHistory />
+            }
         ]
     },
     {
