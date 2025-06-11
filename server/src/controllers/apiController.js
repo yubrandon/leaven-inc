@@ -81,6 +81,12 @@ async function getOrders(req, res) {
     const sales = await Order.salesGet();
     res.status(200).json({orders: orders, sales: sales});
 }
+async function getUserOrders(req, res) {
+    const { id } = req.params;
+    const orders = await Order.ordersGetId(id);
+    const sales = await Order.salesGetId(id);
+    res.status(200).json({orders: orders, sales: sales});
+}
 async function updateOrder(req, res) {
     const { id } = req.params;
     await Order.setComplete(id);
@@ -98,4 +104,4 @@ async function createSales(req, res, orderId) {
 
 
 module.exports = { getUser, getItem, getItems, createItem, editItem, toggleItem,
-                 createOrder, getOrders, updateOrder };
+                 createOrder, getOrders, getUserOrders, updateOrder };

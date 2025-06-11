@@ -26,8 +26,9 @@ apiRouter.post("/items", isAuth, isAdmin, apiController.createItem);
 apiRouter.post("/items/:id", isAuth, isAdmin, apiController.editItem);
 apiRouter.post("/items/:id/hide", isAuth, isAdmin, apiController.toggleItem);
 //apiRouter.post("/items/:id/delete", isAuth, isAdmin, apiController.deleteItem);
-apiRouter.post("/orders", isAuth, apiController.createOrder);
 apiRouter.get("/orders", isAuth, isAdmin, apiController.getOrders);
+apiRouter.post("/orders", isAuth, apiController.createOrder);
+apiRouter.get("/orders/:id", isAuth, apiController.getUserOrders);
 apiRouter.post("/orders/:id", isAuth, isAdmin, apiController.updateOrder);
 
 apiRouter.get("/login-success", (req, res) => {
