@@ -9,9 +9,7 @@ const submitCart = async (id, cart) => {
         body:JSON.stringify({id: id, items: cart})
     });
 
-    console.log(response);
-    const json = await response.json();
-    console.log(json);
+    return response;
     
     
 }

@@ -27,12 +27,14 @@ const CartPage = () => {
                 {cartItems.length ? 
                 (   <button className="btn btn-outline-success col-2 mt-5"
                         onClick={() => {
-                            alert("Your order has been placed!")
-                            navigate("/store");
-
-                            submitCart(userId, cartItems);
-
-                            emptyCart();
+                            
+                            const response = submitCart(userId, cartItems);
+                            if(response.ok) {
+                                alert("Your order has been placed!")
+                                navigate("/store"); 
+                                emptyCart();
+                            }
+                            
                         }}
                     >Complete Order</button>
                 ) : (
