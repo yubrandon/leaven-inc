@@ -5,7 +5,7 @@ module.exports.ordersGet = async function ordersGet() {
     const SQL = `
         SELECT orders.id, username, completed 
         FROM (orders JOIN users ON user_id=users.id) 
-        ORDER BY completed DESC, orders.id
+        ORDER BY completed ASC, orders.id
         `;
     const { rows } = await pool.query(SQL);
     return rows;
