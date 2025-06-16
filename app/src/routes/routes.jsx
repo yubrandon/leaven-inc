@@ -19,19 +19,23 @@ const routes = [
     },
     {
         path: "store",
-        element: <StorePage />
+        element: <StorePage />,
+        errorElement: <ErrorPage />
     },
     {
         path:"cart",
-        element: <CartPage />
+        element: <CartPage />,
+        errorElement: <ErrorPage />
     },
     {
         path:"register",
-        element: <RegistrationPage />
+        element: <RegistrationPage />,
+        errorElement: <ErrorPage />
     },
     {
         path:"login",
-        element: <LoginPage />
+        element: <LoginPage />,
+        errorElement: <ErrorPage />
     },
     {
         path:"profile/:username",

@@ -5,8 +5,8 @@ const ErrorPage = () => {
         <>
             <NavigationBar />
             <div className="container-fluid d-flex flex-column align-items-center">
-                <h1>404</h1>
-                <h2>Page Not Found</h2>
+                <h1>500</h1>
+                <h2>Server Error! Try again later.</h2>
             </div>
         </>
     );
