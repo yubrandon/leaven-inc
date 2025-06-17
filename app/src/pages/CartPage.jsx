@@ -8,6 +8,14 @@ import submitCart from "../utils/submitCart";
 const CartPage = () => {
     const { userId, cartItems, removeItem, emptyCart } = useContext(ShopContext);
     const navigate = useNavigate();
+    const handleSubmit = async () => {
+        const response = await submitCart(userId, cartItems);
+        if(response.ok) {
+            alert("Your order has been placed!")
+            navigate("/store"); 
+            emptyCart();
+        }
+    }
     return (
         <> 
             <NavigationBar />
@@ -26,18 +34,7 @@ const CartPage = () => {
                 }
                 {cartItems.length ? 
                 (   <button className="btn btn-outline-success col-2 mt-5"
-                        onClick={() => {
-                            
-                            const response = submitCart(userId, cartItems);
-                            console.log("cart response", response);
-                            if(response.ok) {
-                                console.log("successful submission");
-                                alert("Your order has been placed!")
-                                navigate("/store"); 
-                                emptyCart();
-                            }
-                            
-                        }}
+                        onClick={handleSubmit}
                     >Complete Order</button>
                 ) : (
                     <h1>Your cart is empty!</h1>
