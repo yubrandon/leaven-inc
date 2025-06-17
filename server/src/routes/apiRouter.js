@@ -32,8 +32,15 @@ apiRouter.get("/orders/:id", isAuth, apiController.getUserOrders);
 apiRouter.post("/orders/:id", isAuth, isAdmin, apiController.updateOrder);
 
 apiRouter.get("/login-success", (req, res) => {
+    if(!req.user) {
+        return res.status(401).json({msg: "Not authenticated."});
+    }
     console.log('successful login');
-    res.status(200).json({msg: "Authentication Successful!", userId: req.user.id, userName: req.user.username, admin: req.user.admin});
+    res.status(200).json({
+        msg: "Authentication Successful!", 
+        userId: req.user.id, 
+        userName: req.user.username, 
+        admin: req.user.admin});
 })
 apiRouter.get("/login-failure", (req, res) => {
     console.log('failed login');

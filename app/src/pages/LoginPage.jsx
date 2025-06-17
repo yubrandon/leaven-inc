@@ -12,35 +12,34 @@ const LoginPage = () => {
         const formData = new FormData(e.target);
         const user = Object.fromEntries(formData);
         const url = `${import.meta.env.VITE_API_URL}/login`;
-        try {
-            const login = async () => {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type" : "application/json",
-                    },
-                    credentials: "include",
-                    body: JSON.stringify(user),
-                });
-                console.log(response);
-                const json = await response.json();
-                console.log(json);
-                if(response.ok) {
-                    setUserId(json.userId);
-                    setUserName(json.userName);
-                    setAdmin(json.admin);
+        const login = async () => {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify(user),
+            });
+            console.log(response);
+            let json;
+            try {
+                json = await response.json();
+            } catch (err) {
+                console.log("Invalid JSON from server",err);
+            }
+            if(response.ok && json) {
+                setUserId(json.userId);
+                setUserName(json.userName);
+                setAdmin(json.admin);
 
-                    navigate(`/profile/${json.userName}`);
-                } else {
-                    const newErrors = [json.msg];
-                    setErrors(newErrors);
-                }
-            };
-            await login();
-        } catch (error) {
-            console.error("fetch failed", error);
-            setErrors(["Login failed. Please try again."]);
-        }
+                navigate(`/profile/${json.userName}`);
+            } else {
+                const newErrors = [json?.msg || "Login failed."];
+                setErrors(newErrors);
+            }
+        };
+        await login();
     }
     return (
         <>
