@@ -21,9 +21,9 @@ const LoginPage = () => {
                 credentials: "include",
                 body: JSON.stringify(user),
             });
-            //console.log(response);
+            console.log(response);
             const json = await response.json();
-            //console.log(json);
+            console.log(json);
             if(response.ok) {
                 setUserId(json.userId);
                 setUserName(json.userName);
