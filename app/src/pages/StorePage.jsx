@@ -8,7 +8,6 @@ const StorePage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
-    const [count, setCount] = useState(0);
     const { addItem } = useContext(ShopContext);
 
     useEffect(() => {
@@ -35,7 +34,6 @@ const StorePage = () => {
                                     {   data ? 
                                         data.map((item) => {
                                             if(!item.hidden) {
-                                                setCount(count + 1);
                                                 return <ItemCard 
                                                     key={item.id}
                                                     item={item}
@@ -46,8 +44,7 @@ const StorePage = () => {
                                             }
                                             
                                         })
-                                        : 
-                                        !count ? <h1>No items available currently!</h1> : <></>
+                                        : <h1>No items available currently!</h1>
                                     }                                
                                 </div>
                             </div>

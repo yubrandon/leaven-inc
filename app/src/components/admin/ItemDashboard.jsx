@@ -85,7 +85,7 @@ const ItemDashboard = () => {
     }
     useEffect(() => {
         const getItems = async () => {
-            const items = await getStoreItems()
+            const items = await getStoreItemsAdmin()
                .catch((error) => setError(error));
             items ? setData(items) : setData(false);
             setIsLoading(false);

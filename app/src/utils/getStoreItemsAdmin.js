@@ -1,4 +1,4 @@
-const getStoreItems = async() => {
+const getStoreItemsAdmin = async() => {
     const url = `${import.meta.env.VITE_API_URL}/items`;
     const response = await fetch(url, {
         method: "GET",
@@ -6,10 +6,8 @@ const getStoreItems = async() => {
             "Content-Type": "application/json",
         }
     })
-    //console.log(response);
     if(response.ok) {
         const json = await response.json();
-        //console.log(json);
         if(json.items.length) {
             const items = json.items;
             const images = json.images;
@@ -18,20 +16,16 @@ const getStoreItems = async() => {
             items.map((item) => {
                 let found = false;
                 images.map((image) => {
-                    if(!item.hidden) {
-                        if(!found && image.item_id == item.id) {
-                            found = true;
-                            itemData.push({id: item.id, name: item.name, 
-                                desc:item.desc, url:image.url, 
-                                aid: image.asset_id, hidden: (item.hidden ? true : false)});
-                        }
+                    if(!found && image.item_id == item.id) {
+                        found = true;
+                        itemData.push({id: item.id, name: item.name, 
+                            desc:item.desc, url:image.url, 
+                            aid: image.asset_id, hidden: (item.hidden ? true : false)});
                     }
                 });
                 
             });
-            //console.log(itemData);
-            if(itemData.length) itemData;
-            return false;
+            return itemData;
         }
         else {
             return false;
@@ -43,5 +37,5 @@ const getStoreItems = async() => {
    
 }
 
-export default getStoreItems;
+export default getStoreItemsAdmin;
 
