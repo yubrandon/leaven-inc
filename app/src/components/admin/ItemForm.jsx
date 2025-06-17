@@ -25,7 +25,7 @@ const ItemForm = () => {
         if(!error.length) {
             //Check if item with same name already
             const item = await checkItemName();
-
+            console.log(item);
             if(!item.exists) {
                 const imageData = await uploadCloudImage(file);
                 const dbImage = await uploadDbImage(name, imageData);

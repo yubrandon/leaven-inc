@@ -11,9 +11,7 @@ const uploadDbImage = async (name, imageData) => {
             image: imageData
         }),
     });
-    const json = await response.json();
-    console.log(json);
-    return json;
+    return response;
 }
 
 export default uploadDbImage;

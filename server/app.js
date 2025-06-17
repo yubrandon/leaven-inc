@@ -38,7 +38,6 @@ app.use((req, res, next) => {
 //Routes
 const apiRouter = require("./src/routes/apiRouter");
 
-app.use("/", (req, res) => res.status(200).json({msg: "successful!"}));
 app.use("/api", apiRouter);
 //API fetch can append response.status to json object when fetching - json['status'] = response.status
 app.get("/{*any}", (req, res) => res.status(404).json({msg : 'resource not found!'}));

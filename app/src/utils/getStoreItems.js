@@ -6,11 +6,11 @@ const getStoreItems = async() => {
             "Content-Type": "application/json",
         }
     })
-    //console.log(response);
+    console.log(response);
     if(response.ok) {
         const json = await response.json();
-        //console.log(json);
-        if(json.items) {
+        console.log(json);
+        if(json.items.length) {
             const items = json.items;
             const images = json.images;
             

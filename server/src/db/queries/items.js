@@ -3,6 +3,7 @@ const pool = require("../pool");
 // Fetch items
 module.exports.itemsGet = async function itemsGet() {
     const { rows } = await pool.query("SELECT items.id, name, description, url, asset_id, hidden FROM (items JOIN images ON items.id = images.item_id)");
+    console.log(rows);
     return rows;
 }
 // Auxilliary function - fetch id of a new item in order to reference for image entry
@@ -19,7 +20,8 @@ module.exports.itemsPost = async function itemsPost(itemName) {
     const SQL = `
         INSERT INTO items (name) VALUES ($1) 
     `;
-    await pool.query(SQL, [itemName]);
+    const response = await pool.query(SQL, [itemName]);
+    console.log(response);
     console.log('item uploaded!');
 }
 //Toggle hidden status of an item
@@ -41,7 +43,9 @@ module.exports.imagesPost = async function imagesPost(id, image) {
     const SQL = `
         INSERT INTO images (item_id, url, asset_id) VALUES ($1, $2, $3)
     `; 
-    await pool.query(SQL, [id.id, image.url, image.assetId]);
+    const response = await pool.query(SQL, [id.id, image.url, image.assetId]);
+    console.log(response);
+    console.log('image added');
 }
 //Check if the item name exists
 module.exports.itemCheck = async function itemCheck(name) {

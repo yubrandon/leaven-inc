@@ -27,6 +27,7 @@ async function getItem(req, res) {
 
 }
 async function getItems(req, res)  {
+    console.log('fetching items');
     const items = await Item.itemsGet();
     const images = await Item.imagesGet();
     res.status(200).json({items: items, images: images});
@@ -35,6 +36,7 @@ async function createItem(req, res) {
     const { itemName } = req.body;
     await Item.itemsPost(itemName);
     await addImage(req,res);
+    res.status(200).json({msg: "Item upload successful!"});
 }
 async function editItem(req, res) {
     const { id } = req.params;
@@ -75,6 +77,7 @@ async function createOrder(req, res) {
     const { id } = req.body;
     const orderId = await Order.ordersPost(id);
     createSales(req, res, orderId);
+    res.status(200).json({msg: "Order created successfuly!"});
 }
 async function getOrders(req, res) {
     const orders = await Order.ordersGet();

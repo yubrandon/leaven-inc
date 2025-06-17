@@ -32,9 +32,11 @@ apiRouter.get("/orders/:id", isAuth, apiController.getUserOrders);
 apiRouter.post("/orders/:id", isAuth, isAdmin, apiController.updateOrder);
 
 apiRouter.get("/login-success", (req, res) => {
+    console.log('successful login');
     res.status(200).json({msg: "Authentication Successful!", userId: req.user.id, userName: req.user.username, admin: req.user.admin});
 })
 apiRouter.get("/login-failure", (req, res) => {
+    console.log('failed login');
     res.status(400).json({msg: "Login failed! Check your username or password!"});
 })
 apiRouter.get("/logout-success", (req, res) => {

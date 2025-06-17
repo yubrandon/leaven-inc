@@ -3,7 +3,7 @@
 const { Client } = require("pg");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
-
+ 
 const SQL = `
 CREATE SCHEMA IF NOT EXISTS public;
 SET search_path TO public;

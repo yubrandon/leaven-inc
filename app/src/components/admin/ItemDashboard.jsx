@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import getStoreItems from "../../utils/getStoreItems";
-import ItemDashboardCard from "./ItemDashboardCard";
+import ItemDashboardCard from "../ItemDashboardCard";
 import uploadCloudImage from "../../utils/uploadCloudImage";
 import checkItemName from "../../utils/checkItemName";
 import updateItem from "../../utils/updateItem";
