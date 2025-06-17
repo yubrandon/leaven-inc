@@ -66,7 +66,6 @@ const orderDashboard = () => {
                                                                 >Complete Order</button>
                                                     }
                                                 </div>
-                                                <p>Contact: {order.email}</p>
                                             </div>
                                             <ul>
                                             {data.sales.map((item) => {
@@ -79,6 +78,7 @@ const orderDashboard = () => {
                                             })
                                             }                                   
                                             </ul>
+                                            <p>Contact: {order.email}</p>
                                         </div>
                                     </div>
                                 </div>
