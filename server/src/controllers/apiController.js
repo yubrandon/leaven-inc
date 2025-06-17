@@ -76,7 +76,7 @@ async function addImage(req, res) {
 async function createOrder(req, res) {
     const { id } = req.body;
     const orderId = await Order.ordersPost(id);
-    createSales(req, res, orderId);
+    await createSales(req, res, orderId);
     res.status(200).json({msg: "Order created successfuly!"});
 }
 async function getOrders(req, res) {
@@ -101,7 +101,6 @@ async function createSales(req, res, orderId) {
     items.map(async (item) => {
         await Order.salesPost(orderId, item.id, item.quantity);
     });
-    res.status(200).json({msg:"ok"});
 }
 
 
