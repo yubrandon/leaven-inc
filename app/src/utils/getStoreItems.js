@@ -6,10 +6,10 @@ const getStoreItems = async() => {
             "Content-Type": "application/json",
         }
     })
-    //console.log(response);
+    console.log(response);
     if(response.ok) {
         const json = await response.json();
-        //console.log(json);
+        console.log(json);
         if(json.items.length) {
             const items = json.items;
             const images = json.images;
@@ -18,7 +18,7 @@ const getStoreItems = async() => {
             items.map((item) => {
                 let found = false;
                 images.map((image) => {
-                    if(!item.hidden) {
+                    if(item.hidden == false) {
                         if(!found && image.item_id == item.id) {
                             found = true;
                             itemData.push({id: item.id, name: item.name, 
@@ -29,7 +29,7 @@ const getStoreItems = async() => {
                 });
                 
             });
-            //console.log(itemData);
+            console.log(itemData);
             if(itemData.length) itemData;
             return false;
         }
