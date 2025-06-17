@@ -9,7 +9,7 @@
     "db": "node src/db/init.js",
     "docker:build": "docker build -t yubrandon/leaveninc-server .",
     "docker:run": "docker run -p 8080:8080 --env PORT=8080 yubrandon/leaveninc-server",
-    "init": "npm run docker:build && npm run docker:run && npm run db"
+    "init": "npm run start && npm run db"
   },
   "keywords": [],
   "author": "",
