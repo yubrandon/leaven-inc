@@ -87,7 +87,7 @@ const ItemDashboard = () => {
         const getItems = async () => {
             const items = await getStoreItems()
                .catch((error) => setError(error));
-            setData(items);
+            items ? setData(items) : setData(false);
             setIsLoading(false);
         }
         getItems();
@@ -168,14 +168,17 @@ const ItemDashboard = () => {
                     (
                         <div className="d-flex flex-column col-12 align-items-center">
                             <h3 className="mb-3">Listed Items</h3>
-
-                            { data.map((item) => {
-                                    return <ItemDashboardCard 
-                                                key={item.id}
-                                                item={item}
-                                                handleClick={editModal}
-                                            ></ItemDashboardCard>
-                                })}
+                            { data ? 
+                                data.map((item) => {
+                                        return <ItemDashboardCard 
+                                                    key={item.id}
+                                                    item={item}
+                                                    handleClick={editModal}
+                                                ></ItemDashboardCard>
+                                    })
+                            :  <h1>No items uploaded!</h1>
+                            }
+                            
                         </div>
                     )
                 )
