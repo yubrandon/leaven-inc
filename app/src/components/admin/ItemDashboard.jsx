@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import getStoreItems from "../../utils/getStoreItems";
+import getStoreItemsAdmin from "../../utils/getStoreItemsAdmin";
 import ItemDashboardCard from "../ItemDashboardCard";
 import uploadCloudImage from "../../utils/uploadCloudImage";
 import checkItemName from "../../utils/checkItemName";
