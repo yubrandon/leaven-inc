@@ -15,7 +15,6 @@ const StorePage = () => {
             const items = await getStoreItems()
                .catch((error) => setError(error));
             items ? setData(items) : setData(false);
-            console.log('items',items);
             setIsLoading(false);   
         }
         getItems();

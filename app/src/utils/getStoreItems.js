@@ -29,9 +29,7 @@ const getStoreItems = async() => {
                 });
                 
             });
-            console.log('sending',itemData);
-            console.log(itemData.length);
-            if(itemData.length > 0) itemData;
+            if(itemData.length) return itemData;
             return false;
         }
         else {
