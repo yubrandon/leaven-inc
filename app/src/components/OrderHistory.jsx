@@ -35,7 +35,7 @@ const OrderHistory = () => {
                             return (
                             <div key={`order-${order.id}`} className="accordion-item">
                                 <h2 className="accordion-header">
-                                    <button className="accordion-button" data-bs-toggle="collapse" 
+                                    <button className="accordion-button collapsed" data-bs-toggle="collapse" 
                                         data-bs-target={`#collapse${order.id}`}
                                     >Order #{order.id}</button>
                                     
