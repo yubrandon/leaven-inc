@@ -8,7 +8,6 @@ const submitCart = async (id, cart) => {
         credentials:"include",
         body:JSON.stringify({id: id, items: cart})
     });
-    console.log(response);
     return response;
     
     

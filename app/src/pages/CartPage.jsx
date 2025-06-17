@@ -29,7 +29,9 @@ const CartPage = () => {
                         onClick={() => {
                             
                             const response = submitCart(userId, cartItems);
+                            console.log("cart response", response);
                             if(response.ok) {
+                                console.log("successful submission");
                                 alert("Your order has been placed!")
                                 navigate("/store"); 
                                 emptyCart();
