@@ -33,7 +33,6 @@ const StorePage = () => {
                                 <div className="container-fluid d-flex flex-row flex-wrap justify-content-center pt-3" style={{gap:'50px'}}>
                                     {   data ? 
                                         data.map((item) => {
-                                            console.log('attribute',item);
                                             if(!item.hidden) {
                                                 return <ItemCard 
                                                     key={item.id}

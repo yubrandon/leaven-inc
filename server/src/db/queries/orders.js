@@ -3,7 +3,7 @@ const pool = require("../pool");
 // Fetch list of orders
 module.exports.ordersGet = async function ordersGet() {
     const SQL = `
-        SELECT orders.id, username, completed 
+        SELECT orders.id, username, email, completed 
         FROM (orders JOIN users ON user_id=users.id) 
         ORDER BY completed ASC, orders.id
         `;

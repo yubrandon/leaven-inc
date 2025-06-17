@@ -66,6 +66,7 @@ const orderDashboard = () => {
                                                                 >Complete Order</button>
                                                     }
                                                 </div>
+                                                <p>Contact: {order.email}</p>
                                             </div>
                                             <ul>
                                             {data.sales.map((item) => {
