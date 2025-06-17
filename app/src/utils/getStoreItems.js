@@ -6,10 +6,10 @@ const getStoreItems = async() => {
             "Content-Type": "application/json",
         }
     })
-    console.log(response);
+    //console.log(response);
     if(response.ok) {
         const json = await response.json();
-        console.log(json);
+        //console.log(json);
         if(json.items.length) {
             const items = json.items;
             const images = json.images;
@@ -29,8 +29,9 @@ const getStoreItems = async() => {
                 });
                 
             });
-            console.log(itemData);
-            if(itemData.length) itemData;
+            console.log('sending',itemData);
+            console.log(itemData.length);
+            if(itemData.length > 0) itemData;
             return false;
         }
         else {
