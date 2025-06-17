@@ -18,17 +18,20 @@ const getStoreItems = async() => {
             items.map((item) => {
                 let found = false;
                 images.map((image) => {
-                    if(!found && image.item_id == item.id) {
-                        found = true;
-                        itemData.push({id: item.id, name: item.name, 
-                            desc:item.desc, url:image.url, 
-                            aid: image.asset_id, hidden: (item.hidden ? true : false)});
+                    if(!item.hidden) {
+                        if(!found && image.item_id == item.id) {
+                            found = true;
+                            itemData.push({id: item.id, name: item.name, 
+                                desc:item.desc, url:image.url, 
+                                aid: image.asset_id, hidden: (item.hidden ? true : false)});
+                        }
                     }
                 });
                 
             });
             //console.log(itemData);
-            return itemData;
+            if(itemData.length) return itemData;
+            return false;
         }
         else {
             return false;
