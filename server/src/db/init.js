@@ -5,6 +5,9 @@ const bcrypt = require("bcryptjs");
 require("dotenv").config();
 
 const SQL = `
+CREATE SCHEMA IF NOT EXISTS public;
+SET search_path TO public;
+
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER GENERATED ALWAYS AS IDENTITY,
     username VARCHAR (255) NOT NULL,
@@ -24,7 +27,7 @@ CREATE TABLE IF NOT EXISTS items (
 CREATE TABLE IF NOT EXISTS images (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     item_id INTEGER NOT NULL,
-    url VARCHAR(255) NOT NULL DEFAULT http://res.cloudinary.com/dlm75mx0p/image/upload/v1749090545/no-image-icon-23485_ifkrhl.png,
+    url VARCHAR(255) NOT NULL DEFAULT 'http://res.cloudinary.com/dlm75mx0p/image/upload/v1749090545/no-image-icon-23485_ifkrhl.png',
     asset_id VARCHAR(255),
     FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
 );

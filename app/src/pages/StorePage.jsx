@@ -14,7 +14,7 @@ const StorePage = () => {
         const getItems = async () => {
             const items = await getStoreItems()
                .catch((error) => setError(error));
-            setData(items);
+            items ? setData(items) : setData(false);
             setIsLoading(false);   
         }
         getItems();
