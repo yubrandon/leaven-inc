@@ -15,6 +15,7 @@ const StorePage = () => {
             const items = await getStoreItems()
                .catch((error) => setError(error));
             items ? setData(items) : setData(false);
+            console.log('items',items);
             setIsLoading(false);   
         }
         getItems();
@@ -33,6 +34,7 @@ const StorePage = () => {
                                 <div className="container-fluid d-flex flex-row flex-wrap justify-content-center pt-3" style={{gap:'50px'}}>
                                     {   data ? 
                                         data.map((item) => {
+                                            console.log('attribute',item);
                                             if(!item.hidden) {
                                                 return <ItemCard 
                                                     key={item.id}
