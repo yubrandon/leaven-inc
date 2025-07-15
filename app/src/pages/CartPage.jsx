@@ -15,6 +15,9 @@ const CartPage = () => {
             navigate("/store"); 
             emptyCart();
         }
+        else {
+            alert("Please log in and try again!");
+        }
     }
     return (
         <> 
